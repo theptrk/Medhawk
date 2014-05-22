@@ -1,0 +1,28 @@
+{
+  "name": "MedHawk",
+  "version": "0.0.0",
+  "description": "Medhawk1 ========",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha tests/test.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MedHawk/MedHawk.git"
+  },
+  "keywords": [
+    "healthcare"
+  ],
+  "authors": [
+    "Jonathan Reem <jonathan.reem@gmail.com>",
+    "Emily Dong <emily.y.dong@gmail.com>",
+    "Patrick Tran <patrick.tran06@gmail.com>",
+    "Mike Freeman <michael.p.freeman@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MedHawk/MedHawk/issues"
+  },
+  "homepage": "https://github.com/MedHawk/MedHawk"
+}
