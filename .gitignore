@@ -1,3 +1,7 @@
-secret.js
-node_modules/
-bower_components/
+server/secret.js
+server/node_modules/
+server/bower_components/
+
+client/node_modules/
+client/bower_components/
+client/secret.js
