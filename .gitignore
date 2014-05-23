@@ -1,6 +1,5 @@
 server/secret.js
 server/node_modules/
-server/bower_components/
 
 client/node_modules/
 client/bower_components/
