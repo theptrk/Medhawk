@@ -6,4 +6,6 @@ module.exports = {
   getDrugs: DrugController.getDrugs,
   postTweet: TweetController.postTweet,
   getEffects: EffectController.getEffects,
+  postEffectToDrug: EffectController.postEffectToDrug,
+  getEffectsFromDrug: EffectController.getEffectsFromDrug
 };
