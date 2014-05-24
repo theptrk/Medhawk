@@ -6,7 +6,10 @@ module.exports.getEffects = function (req, res) {
   Drug.find({name: data.drugName, company: data.company})
     .exec()
     .then(function (drug) {
-      res.json(drug.effects);
+      return drug.populate('effects');
+    })
+    .then(function (effects) {
+      res.json(effects);
     })
     .fail(function (err) {
       res.send(500, err);
