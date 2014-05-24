@@ -5,14 +5,11 @@ var Drug   = Models.Drug;
 module.exports.postTweet = function (req, res) {
   var data = req.body;
  
-  Drug.find({name: data.drugName}).exec().then(function (drug) {
-    return Tweet.create({
-      twitter_id: data.twitter_id,
-      drug:       drug._id,
-      effects:    data.selectedEffects,
-      company:    drug.company
-    }).save().exec();
-  })
+  Tweet.create({
+      tweet: data.tweet,
+      link: data.link
+  }).save()
+    .exec()
   .then(function (saveError) {
     if (saveError) {
       throw saveError;
