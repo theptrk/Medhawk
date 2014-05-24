@@ -1,10 +1,9 @@
 var mongoose = require('mongoose');
-var Effect   = require('./effect.js');
 
 var drugSchema = new mongoose.Schema({
   name:           {type: String},
   company:        {type: String},
-  commonSymptoms: {type: [mongoose.Schema.Types.ObjectId]}
+  effects: {type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Effect'}]}
 });
 
 var DrugModel = new mongoose.Model('Drug', drugSchema);
