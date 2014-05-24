@@ -2,7 +2,7 @@ var Drug = require('../models').Drug;
 
 module.exports.getDrugs = function (req, res) {
   var data = req.body;
-  Drug.find(data.matching, data.fields, data.options)
+  Drug.find(data.matching || {}, data.fields || "name company", data.options || {})
     .exec()
     .then(function (data) {
       res.json(data);
