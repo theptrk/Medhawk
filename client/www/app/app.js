@@ -17,3 +17,22 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+
+    .state('main', {
+      url: '/',
+      abstract: true,
+      templateUrl: 'main.html'
+    })
+
+    .state('drugs', {
+      url: '/drugs',
+      abstract: true,
+      templateUrl: 'main.html'
+    })
+
+  $urlRouterProvider.otherwise('/drugs');
+})
