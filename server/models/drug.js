@@ -6,6 +6,6 @@ var drugSchema = new mongoose.Schema({
   effects: {type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Effect'}]}
 });
 
-var DrugModel = new mongoose.Model('Drug', drugSchema);
+var DrugModel = mongoose.model('Drug', drugSchema);
 
 module.exports.Drug = DrugModel;

@@ -1,12 +1,10 @@
 var mongoose = require('mongoose');
 
 var tweetSchema = new mongoose.Schema({
-  twitter_id: {type: Number},
-  drug: {type: mongoose.Schema.Types.ObjectId}, // Drug ID
-  effects: {type: [effect.Schema]},
-  company: {type: String}
+  tweet: {type: String},
+  link: {type: String}
 });
 
-var TweetModel = mongoose.model(tweetSchema);
+var TweetModel = mongoose.model('Tweet', tweetSchema);
 
 module.exports.Tweet = TweetModel;
