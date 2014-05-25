@@ -6,7 +6,8 @@
 angular.module('starter', [
   'ionic',
   'drugs',
-  'share'
+  'share',
+  'user'
   ])
 
 .run(function($ionicPlatform) {
@@ -77,12 +78,39 @@ angular.module('starter', [
     .state('share.tweet', {
       url: '/tweet',
       views: {
-        'share':{
+        'share': {
           templateUrl: 'app/share/share_tweet.html',
           controller: 'ShareCtrl'
         }
       }
     })
+
+    .state('user', {
+      url: '/user',
+      abstract: true,
+      templateUrl: 'app/main.html'
+    })
+
+    .state('user.login', {
+      url: '/login',
+      views: {
+        'user':{
+          templateUrl: 'app/user/user_login.html',
+          controller: 'UserCtrl'
+        }
+      }
+    })
+
+    .state('user.profile', {
+      url: '/profile',
+      views: {
+        'user': {
+          templateUrl: 'app/user/user_profile.html',
+          controller: 'UserCtrl'
+        }
+      }
+    })
+
 
   $urlRouterProvider.otherwise('/share');
 })
