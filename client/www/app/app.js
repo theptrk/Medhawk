@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', [
   'ionic',
-  'drugs'
+  'drugs',
+  'share'
   ])
 
 .run(function($ionicPlatform) {
@@ -55,7 +56,33 @@ angular.module('starter', [
           controller: 'DrugCtrl'
         }
       }
-    });
+    })
 
-  $urlRouterProvider.otherwise('/drugs');
+    .state('share', {
+      url: '/share',
+      abstract: true,
+      templateUrl: 'app/main.html'
+    })
+
+    .state('share.visual', {
+      url: '/visual',
+      views: {
+        'share':{
+          templateUrl: 'app/share/share_visual.html',
+          controller: 'ShareCtrl'
+        }
+      }
+    })
+
+    .state('share.tweet', {
+      url: '/tweet',
+      views: {
+        'share':{
+          templateUrl: 'app/share/share_tweet.html',
+          controller: 'ShareCtrl'
+        }
+      }
+    })
+
+  $urlRouterProvider.otherwise('/share');
 })
