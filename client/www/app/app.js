@@ -112,5 +112,5 @@ angular.module('starter', [
     })
 
 
-  $urlRouterProvider.otherwise('/drugs/meds');
+  $urlRouterProvider.otherwise('/drugs/meds'); // make sure to change in production to login screen
 })
