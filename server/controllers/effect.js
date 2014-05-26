@@ -25,27 +25,19 @@ module.exports.getEffectsFromDrug = function (req, res) {
 module.exports.postEffectToDrug = function (req, res) {
   var data = req.body;
 
-  Q.all([Effect.findOne({name: effectName}).exec(), Drug.findOne({name: data.drugName})])
+  Q.all([Effect.findOne({name: effectName}).exec(), Drug.findOne({name: data.drugName}).exec()])
     .spread(function (effect, drug) {
       drug.effects.push(effect._id);
       return drug.save().exec();
-    }).then(function (saveError) {
-      if (saveError) {
-        throw saveError;
-      } else {
-        res.send(201, "Posted Data.");
-      }
-    }).fail(controllerUtils.internalServerError(res));
+    })
+    .then(controllerUtils.saveHandler(res))
+    .fail(controllerUtils.internalServerError(res));
 };
 
 module.exports.postNewEffect = function (req, res) {
   var data = req.body;
 
-  Q(Effect.create({name: req.name})).then(function (saveError) {
-    if (saveError) {
-      throw saveError;
-    } else {
-      res.send(201, "Posted Data.");
-    }
-  });
+  Q(Effect.create({name: req.name}))
+    .then(controllerUtils.saveHandler(res))
+    .fail(controllerUtils.internalServerError(res));
 };

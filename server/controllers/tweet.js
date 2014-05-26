@@ -1,23 +1,16 @@
-var Models = require('../models');
-var Tweet  = Models.Tweet;
-var Drug   = Models.Drug;
+var Models          = require('../models');
+var Tweet           = Models.Tweet;
+var Drug            = Models.Drug;
+var controllerUtils = require('./controllerUtils.js');
+var Q               = require('q');
 
 module.exports.postTweet = function (req, res) {
   var data = req.body;
  
-  Tweet.create({
+  Q(Tweet.create({
       tweet: data.tweet,
       link: data.link
-  }).save()
-    .exec()
-  .then(function (saveError) {
-    if (saveError) {
-      throw saveError;
-    } else {
-      res.send(201, "Saved Tweet.");
-    }
-  })
-  .fail(function (err) {
-    req.send(500, err);
-  });
+  }).save().exec())
+  .then(controllerUtils.saveHandler(res))
+  .fail(controllerUtils.internalServerError(res));
 };
