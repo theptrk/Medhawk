@@ -13,15 +13,15 @@ module.exports.robustQuery = function (model, defaults) {
 
 module.exports.internalServerError = function (res) {
   return function (err) {
-    console.error(err.stack);
+    console.error(err);
     res.send(500, "Internal Server Error.");
   };
 };
 
 module.exports.saveHandler = function (res) {
-  return function (saveError) {
-    if (saveError) {
-      throw saveError;
+  return function (saved) {
+    if (!saved) {
+      throw new Error("Failed to save.");
     } else {
       res.send("201", "Posted Data.");
     }
