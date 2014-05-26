@@ -1,8 +1,8 @@
 /* jshint -W024 */
 /* jshint expr:true */
 
-var expect = require('chai').expect;
-var app    = require('../server.js');
+var expect  = require('chai').expect;
+var app     = require('../server.js');
 var db      = require('../mongoose'); 
 var Q       = require('q');
 var Models  = require('../models');
@@ -43,7 +43,7 @@ describe('Server', function () {
     it('should return 200 on a get request', function (done) {
     });
 
-    it('should return an array of drugs', function (done) {
+    it('should return the right drugs', function (done) {
     });
 
     it('should support robust queries', function (done) {
@@ -55,6 +55,17 @@ describe('Server', function () {
     });
 
     it('should return the right effects', function (done) {
+    });
+
+    it('should support robust queries', function (done) {
+    });
+  });
+
+  describe('/tweet', function () {
+    it('should return 201 on a post request', function (done) {
+    });
+
+    it('should post a new tweet to the database', function (done) {
     });
   });
 });
