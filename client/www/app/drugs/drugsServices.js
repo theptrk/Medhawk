@@ -1,5 +1,17 @@
 angular.module('drugServices', [])
 
+.factory('drugEffects', function() {
+  var drugEffects = [
+    'Nausea',
+    'Heart-burn',
+    'Indigestion',
+    'Rash',
+    'Headache'
+  ];
+
+  return drugEffects;
+})
+
 .factory('drugNames', function() {
   var drugNames = [
     'Abilify',
