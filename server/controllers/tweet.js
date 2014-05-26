@@ -10,7 +10,6 @@ module.exports.postTweet = function (req, res) {
   Q(Tweet.create({
       tweet: data.tweet,
       link: data.link
-  }).save().exec())
-  .then(controllerUtils.saveHandler(res))
+  })).then(controllerUtils.saveHandler(res))
   .fail(controllerUtils.internalServerError(res));
 };
