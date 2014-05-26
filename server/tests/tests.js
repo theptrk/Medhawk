@@ -8,6 +8,7 @@ var Q       = require('q');
 var Models  = require('../models');
 var utils   = require('./testUtil.js');
 var request = require('request');
+var _       = require('lodash');
 
 var reqPort = 3000;
 var reqUrl = 'http://localhost:' + reqPort;
@@ -43,42 +44,76 @@ describe('Server', function () {
 
   describe('/drugs', function() {
     it('should return 200 on a get request', function (done) {
-      request(reqUrl + '/drugs', {form: {appKey: "TestKey"}}, function (error, response, body) {
+      request.get(reqUrl + '/drugs', {form: {appKey: "TestKey"}}, function (error, response, body) {
         expect(!!error).to.be.false;
         expect(response.statusCode).to.equal(200);
         done();
       });
     });
 
-    xit('should return the right drugs', function (done) {
-
+    it('should return the right drugs', function (done) {
+      request.get(reqUrl + '/drugs', {form: {appKey: "TestKey"}}, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(_.pluck(JSON.parse(body), 'name')).to.include("Test");
+        done();
+      });
     });
 
-    xit('should support robust queries', function (done) {
+    it('should support robust queries', function (done) {
+      request.get(reqUrl + '/drugs', {form: 
+        {appKey: "TestKey", matching: {company: "Test"}}
+      }, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(JSON.parse(body)[0].name).to.equal("Test");
+        done();
+      });      
     });
   });
 
   describe('/effects', function() {
     it('should return 200 on a get request', function (done) {
-      request(reqUrl + '/effects', {form: {appKey: "TestKey"}}, function (error, response, body) {
+      request.get(reqUrl + '/effects', {form: {appKey: "TestKey"}}, function (error, response, body) {
         expect(!!error).to.be.false;
         expect(response.statusCode).to.equal(200);
         done();
       });
     });
 
-    xit('should return the right effects', function (done) {
+    it('should return the right effects', function (done) {
+      request.get(reqUrl + '/effects', {form: {appKey: "TestKey"}}, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(_.pluck(JSON.parse(body), 'name')).to.include("TestEffect");
+        done();
+      });
     });
 
-    xit('should support robust queries', function (done) {
+    it('should support robust queries', function (done) {
+      request.get(reqUrl + '/effects', {form: 
+        {appKey: "TestKey", matching: {name: "TestEffect"}}
+      }, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(JSON.parse(body)[0].name).to.equal("TestEffect");
+        done();
+      });      
     });
   });
 
-  describe('/tweet', function () {
-    xit('should return 201 on a post request', function (done) {
-    });
+  describe('/tweets', function () {
+    it('should return 201 on a post request and post a tweet to the database', function (done) {
+      request.post(reqUrl + '/tweets/post', {form: 
+        {appKey: "TestKey", link: "testlink", tweet: "testtweet"}
+      }, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(response.statusCode).to.equal(201);
 
-    xit('should post a new tweet to the database', function (done) {
+        Models.Tweet.findOne({link: "testlink"}).exec()
+          .then(function (tweet) {
+            expect(tweet); // Found the test tweet.
+            tweet.remove();
+          }).then(function () {
+            done();
+          });
+      });
     });
   });
 });
