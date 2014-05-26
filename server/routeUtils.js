@@ -9,3 +9,15 @@ module.exports.validateRequest = function (fields) {
     }
   };
 };
+
+var isRecognized = function (appKey) {
+  return secret.RECOGNIZED.indexOf(appKey) !== -1;
+};
+
+module.exports.isApp = function (req, res, next) {
+  if (isRecognized(req.body.appKey)) {
+    next();
+  } else {
+    res.send(401, "Unauthorized.");
+  }
+};
