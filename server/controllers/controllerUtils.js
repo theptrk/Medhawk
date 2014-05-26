@@ -2,14 +2,12 @@ var Q = require('q');
 
 module.exports.robustQuery = function (model, defaults) {
   return function (req, res) {
-    var data = req.body;
     Q(model.find(
-      data.matching || defaults.matching,
-      data.fields   || defaults.fields,
-      data.options  || defaults.options)
-    .exec())
+      req.body.matching || defaults.matching,
+      req.body.fields   || defaults.fields,
+      req.body.options  || defaults.options).exec())
     .then(res.json.bind(res))
-    .fail(module.exports.internalServerError(res)); 
+    .fail(module.exports.internalServerError(res));
   };
 };
 
