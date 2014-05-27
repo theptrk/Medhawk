@@ -194,5 +194,61 @@ describe('Server', function () {
       });
     });
   });
+
+  describe('/emojis', function() {
+    before(function (done) {
+      Q(Models.Emoji.create({
+        symptom: "TestSymptom",
+        link: "TestEmojiLink"
+      })).then(function () {
+        done();
+      }).fail(console.error.bind(console));
+    });
+
+    it('should return 200 on a get request', function (done) {
+      request.get(reqUrl + '/emojis', {form: {appKey: "TestKey"}}, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+
+    it('should return the right emojis', function (done) {
+      request.get(reqUrl + '/emojis', {form: {appKey: "TestKey"}}, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(_.pluck(JSON.parse(body), 'symptom')).to.include("TestSymptom");
+        done();
+      });
+    });
+
+    it('should support robust queries', function (done) {
+      request.get(reqUrl + '/emojis', {form: 
+        {appKey: "TestKey", matching: {symptom: "TestSymptom"}}
+      }, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(JSON.parse(body)[0].link).to.equal("TestEmojiLink");
+        done();
+      });      
+    });
+
+    describe('/emojis/post', function () {
+      it('should return 201 and post to the database on a post request.', function (done) {
+        request.post(reqUrl + '/emojis/post', {form: 
+          {appKey: "TestKey", symptom: "testpost", link: "testpost"} 
+        }, function (error, response, body) {
+          expect(!!error).to.be.false;
+          expect(response.statusCode).to.equal(201);
+
+          Models.Emoji.findOne({symptom: "testpost"}).exec()
+            .then(function (emoji) {
+              expect(emoji);
+              emoji.remove();
+            }).then(function () {
+              done();
+            });
+        });
+      });
+    });
+  });
 });
 
