@@ -5,7 +5,7 @@ angular.module('drugServices', ['config', 'httpUtility'])
     return function () {
       return httpPromise({
         url: configuration.SERVERPATH + path,
-        data: { appKey: configuration.APPKEY },
+        params: { appKey: configuration.APPKEY }
       });
     };
   };
@@ -14,8 +14,8 @@ angular.module('drugServices', ['config', 'httpUtility'])
     return function (data) {
       return httpPromise({
         url: configuration.SERVERPATH + path,
-        method: 'POST',
-        data: _.extend({
+        type: 'POST',
+        params: _.extend({
           appKey: configuration.APPKEY,
         }, data)
       });
