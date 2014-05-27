@@ -22,7 +22,8 @@ describe('Server', function () {
       return Models.Drug.create({
           name: 'Test',
           company: 'Test',
-          effects: [effect._id]
+          effects: [effect._id],
+          handle: 'TestHandle'
       });
     }).then(function () {
       done();
@@ -72,7 +73,7 @@ describe('Server', function () {
     describe('/drugs/post', function () {
       it('should return 201 and post to the database on a post request.', function (done) {
         request.post(reqUrl + '/drugs/post', {form: 
-          {appKey: "TestKey", name: "testpost", company: "testpost"} 
+          {appKey: "TestKey", name: "testpost", company: "testpost", handle: "testpost"} 
         }, function (error, response, body) {
           expect(!!error).to.be.false;
           expect(response.statusCode).to.equal(201);
