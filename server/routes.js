@@ -20,7 +20,7 @@ module.exports = function (app) {
     controllers.getEffectsFromDrug);
 
   app.post("/drugs/post", utils.isApp, 
-    utils.validateRequest(["name", "company"]), 
+    utils.validateRequest(["name", "company", "handle"]), 
     controllers.postDrug);
   
   app.post("/effects/post", utils.isApp, 
