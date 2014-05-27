@@ -11,6 +11,9 @@ module.exports = function (app) {
   app.get("/tweets", utils.isApp,
     controllers.getTweets);
 
+  app.get("/emoji", utils.isApp,
+    controllers.getEmoji);
+
   app.post("/effects/postToDrug", utils.isApp, 
     utils.validateRequest(["drugName", "effectName"]), 
     controllers.postEffectToDrug);
@@ -30,4 +33,8 @@ module.exports = function (app) {
   app.post("/tweets/post", utils.isApp, 
     utils.validateRequest(["tweet", "link"]), 
     controllers.postTweet);
+
+  app.post("/emojis/post", utils.isApp, 
+    utils.validateRequest(["symptom", "link"]), 
+    controllers.postEmoji);
 };
