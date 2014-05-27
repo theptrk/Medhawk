@@ -1,7 +1,7 @@
-var controllers = require('./controllers');
+var controllers = require('../controllers');
 var utils       = require('./routeUtils.js');
 
-module.exports = function (app) {
+module.exports.route = function (app) {
   app.get("/drugs", utils.isApp, 
     controllers.getDrugs);
 
