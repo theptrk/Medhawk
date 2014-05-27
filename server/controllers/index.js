@@ -7,7 +7,7 @@ var controllerUtils  = require('./controllerUtils.js');
 module.exports = {
   getDrugs: controllerUtils.robustQuery(Models.Drug, {
     matching: {},
-    fields: "name company",
+    fields: "name company handle",
     options: {}
   }),
 
@@ -25,7 +25,8 @@ module.exports = {
 
   postDrug: controllerUtils.robustPost(Models.Drug, {
     name: "name",
-    company: "company"
+    company: "company",
+    handle: "handle"
   }),
 
   postEffect: controllerUtils.robustPost(Models.Effect, {
