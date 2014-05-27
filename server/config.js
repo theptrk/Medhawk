@@ -1,20 +1,17 @@
 var express = require('express');
-var path = require('path');
+var morgan = require('morgan');
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
     console.log("Received request:");
-    require('morgan')({format: 'short', immediate: true})(req, res, next);
+    morgan({format: 'short', immediate: true})(req, res, next);
   });
-  app.use(require('morgan')({format: 'short'}));
+  app.use(require('cors')());
+  app.use(morgan({format: 'short'}));
   app.use(require('body-parser')());
   app.use(function (req, res, next) {
     console.log("Request Body:", req.body);
+    console.log("Request Params:", req.query);
     next();
   });
-  app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-Width");
-    next();
-  })
 };

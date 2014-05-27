@@ -4,9 +4,9 @@ var _ = require('lodash');
 module.exports.robustQuery = function (model, defaults) {
   return function (req, res) {
     Q(model.find(
-      req.body.matching || defaults.matching,
-      req.body.fields   || defaults.fields,
-      req.body.options  || defaults.options).exec())
+      req.query.matching || defaults.matching,
+      req.query.fields   || defaults.fields,
+      req.query.options  || defaults.options).exec())
     .then(res.json.bind(res))
     .fail(module.exports.internalServerError(res));
   };

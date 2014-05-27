@@ -16,7 +16,7 @@ var isRecognized = function (appKey) {
 };
 
 module.exports.isApp = function (req, res, next) {
-  if (isRecognized(req.body.appKey)) {
+  if (isRecognized(req.body.appKey) || isRecognized(req.query.appKey)) {
     next();
   } else {
     res.send(401, "Unauthorized.");
