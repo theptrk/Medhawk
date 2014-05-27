@@ -11,7 +11,7 @@ module.exports = function (app) {
   app.get("/tweets", utils.isApp,
     controllers.getTweets);
 
-  app.get("/emoji", utils.isApp,
+  app.get("/emojis", utils.isApp,
     controllers.getEmoji);
 
   app.post("/effects/postToDrug", utils.isApp, 
