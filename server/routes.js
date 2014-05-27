@@ -1,6 +1,5 @@
 var controllers = require('./controllers');
 var utils       = require('./routeUtils.js');
-var secret      = require('./secret.js');
 
 module.exports = function (app) {
   app.get("/drugs", utils.isApp, 
@@ -9,13 +8,24 @@ module.exports = function (app) {
   app.get("/effects", utils.isApp, 
     controllers.getEffects);
 
-  app.post("/effects/post", utils.isApp, 
+  app.get("/tweets", utils.isApp,
+    controllers.getTweets);
+
+  app.post("/effects/postToDrug", utils.isApp, 
     utils.validateRequest(["drugName", "effectName"]), 
     controllers.postEffectToDrug);
 
   app.get("/effects/fromDrug", utils.isApp, 
     utils.validateRequest(["drugName"]), 
     controllers.getEffectsFromDrug);
+
+  app.post("/drugs/post", utils.isApp, 
+    utils.validateRequest(["name", "company"]), 
+    controllers.postTweet);
+  
+  app.post("/effects/post", utils.isApp, 
+    utils.validateRequest(["name"]),
+    controllers.postTweet);
 
   app.post("/tweets/post", utils.isApp, 
     utils.validateRequest(["tweet", "link"]), 
