@@ -1,120 +1,44 @@
-angular.module('drugServices', [])
+angular.module('drugServices', ['config', 'httpUtility'])
 
-.factory('drugEffects', function() {
-  var drugEffects = [
-    'Nausea',
-    'Heart-burn',
-    'Indigestion',
-    'Rash',
-    'Headache'
-  ];
+.factory('_makeRequesters', ['httpPromise', 'configuration', function(httpPromise, configuration) {
+  var makeGetter = function (path) {
+    return function () {
+      return httpPromise({
+        url: configuration.SERVERPATH + path,
+        data: { appKey: configuration.APPKEY },
+      });
+    };
+  };
 
-  return drugEffects;
-})
+  var makeSetter = function (path) {
+    return function (data) {
+      return httpPromise({
+        url: configuration.SERVERPATH + path,
+        method: 'POST',
+        data: _.extend({
+          appKey: configuration.APPKEY,
+        }, data)
+      });
+    };
+  };
 
-.factory('drugNames', function() {
-  var drugNames = [
-    'Abilify',
-    'Aciphex',
-    'Advair Diskus',
-    'Afinitor',
-    'Alimta',
-    'Aranesp',
-    'Atripla',
-    'Avastin',
-    'Avonex',
-    'Avonex Pen',
-    'Benicar',
-    'Benicar Hct',
-    'Betaseron',
-    'Bystolic',
-    'Celebrex',
-    'Cialis',
-    'Combivent Respimat',
-    'Complera',
-    'Copaxone',
-    'Crestor',
-    'Cubicin',
-    'Cymbalta',
-    'Dexilant',
-    'Diovan',
-    'Enbrel',
-    'Epogen',
-    'Erbitux',
-    'Evista',
-    'Flovent Hfa',
-    'Focalin Xr',
-    'Gardasil',
-    'Gilenya',
-    'Gleevec',
-    'Herceptin',
-    'Humalog',
-    'Humalog Kwikpen',
-    'Humira',
-    'Incivek',
-    'Invega Sustenna',
-    'Isentress',
-    'Janumet',
-    'Januvia',
-    'Lantus',
-    'Lantus Solostar',
-    'Levemir',
-    'Lucentis',
-    'Lunesta',
-    'Lyrica',
-    'Namenda',
-    'Nasonex',
-    'Neulasta',
-    'Neupogen',
-    'Nexium',
-    'Novolog',
-    'Novolog Flexpen',
-    'Orencia',
-    'Oxycontin',
-    'Pradaxa',
-    'Prevnar 13',
-    'Prezista',
-    'Pristiq',
-    'Procrit',
-    'Remicade',
-    'Renvela',
-    'Reyataz',
-    'Rituxan',
-    'Sandostatin Lar',
-    'Sensipar',
-    'Seroquel Xr',
-    'Spiriva Handihaler',
-    'Stelara',
-    'Strattera',
-    'Stribild',
-    'Suboxone',
-    'Symbicort',
-    'Synagis',
-    'Synthroid',
-    'Tamiflu',
-    'Tarceva',
-    'Tecfidera',
-    'Treanda',
-    'Truvada',
-    'Velcade',
-    'Ventolin Hfa',
-    'Vesicare',
-    'Viagra',
-    'Victoza 3-Pak',
-    'Viread',
-    'Vytorin',
-    'Vyvanse',
-    'Welchol',
-    'Xarelto',
-    'Xeloda',
-    'Xgeva',
-    'Xifaxan',
-    'Xolair',
-    'Zetia',
-    'Zostavax',
-    'Zytiga',
-    'Zyvox'
-  ];
+  return {
+    makeGetter: makeGetter,
+    makeSetter: makeSetter
+  };
+}])
 
-  return drugNames;
-})
+.factory('drugEffects', ['_makeRequesters', function(_makeRequesters) {
+  return {
+    getEffects: _makeRequesters.makeGetter('/effects'),
+    postEffect: _makeRequesters.makeSetter('/effects') 
+  };
+}])
+
+.factory('drugNames', ['_makeRequesters', function(_makeRequesters) {
+  return {
+    getDrugs: _makeRequesters.makeGetter('/drugs'),
+    postDrugs: _makeRequesters.makeSetter('/drugs')
+  };
+}]);
+

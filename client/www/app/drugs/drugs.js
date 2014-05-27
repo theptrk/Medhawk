@@ -1,10 +1,13 @@
 angular.module('drugs', ['drugServices'])
 
 .controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', function($scope, $rootScope, $state, drugNames, drugEffects){
-  console.log('This is the DrugCtrl controller');
+  drugNames.getDrugs().then(function (drugs) {
+    $scope.drugs = drugs;
+  });
 
-  $scope.drugs = drugNames;
-  $scope.effects = drugEffects;
+  drugEffects.getEffects().then(function (effects) {
+    $scope.effects = effects;
+  });
 
   $scope.navEffects = function(drugName) {
     $rootScope.drugName = drugName;
