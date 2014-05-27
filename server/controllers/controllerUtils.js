@@ -1,4 +1,5 @@
 var Q = require('q');
+var _ = require('lodash');
 
 module.exports.robustQuery = function (model, defaults) {
   return function (req, res) {
@@ -8,6 +9,22 @@ module.exports.robustQuery = function (model, defaults) {
       req.body.options  || defaults.options).exec())
     .then(res.json.bind(res))
     .fail(module.exports.internalServerError(res));
+  };
+};
+
+var buildCreate = function (fields, body) {
+  var result = {};
+  _.each(fields, function (val, key) {
+    result[key] = body[val];
+  });
+  return result;
+};
+
+module.exports.robustPost = function (model, fields) {
+  return function (req, res) {
+    Q(model.create(buildCreate(fields, req.body)))
+      .then(module.exports.saveHandler(res))
+      .fail(module.exports.internalServerError(res));
   };
 };
 
