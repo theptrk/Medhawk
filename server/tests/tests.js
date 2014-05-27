@@ -68,6 +68,25 @@ describe('Server', function () {
         done();
       });      
     });
+
+    describe('/drugs/post', function () {
+      it('should return 201 and post to the database on a post request.', function (done) {
+        request.post(reqUrl + '/drugs/post', {form: 
+          {appKey: "TestKey", name: "testpost", company: "testpost"} 
+        }, function (error, response, body) {
+          expect(!!error).to.be.false;
+          expect(response.statusCode).to.equal(201);
+
+          Models.Drug.findOne({name: "testpost"}).exec()
+            .then(function (drug) {
+              expect(drug);
+              drug.remove();
+            }).then(function () {
+              done();
+            });
+        });
+      });
+    });
   });
 
   describe('/effects', function() {
@@ -94,7 +113,65 @@ describe('Server', function () {
         expect(!!error).to.be.false;
         expect(JSON.parse(body)[0].name).to.equal("TestEffect");
         done();
-      });      
+      });
+    });
+
+    it('should get all the effects from a drug', function (done) {
+      request.get(reqUrl + '/effects/fromDrug', {form:
+        {appKey: "TestKey", drugName: "Test"}
+      }, function (error, response, body) {
+        expect(!!error).to.be.false;
+        expect(response.statusCode).to.equal(200);
+        expect(_.pluck(JSON.parse(body), 'name')).to.include("TestEffect");
+        done();
+      });
+    });
+
+    describe('/effects/post', function () {
+      it('should return 201 and post to the database on a post request.', function (done) {
+        request.post(reqUrl + '/effects/post', {form: 
+          {appKey: "TestKey", name: "testpost"} 
+        }, function (error, response, body) {
+          expect(!!error).to.be.false;
+          expect(response.statusCode).to.equal(201);
+
+          Models.Effect.findOne({name: "testpost"}).exec()
+            .then(function (effect) {
+              expect(effect);
+              effect.remove();
+            }).then(function () {
+              done();
+            });
+        });
+      });
+
+      it('should post to a drug at /postToDrug', function (done) {
+        request.post(reqUrl + '/effects/post', {form: 
+          {appKey: "TestKey", name: "DrugTest"} 
+        }, function (error, response, body) {
+          expect(!!error).to.be.false;
+          expect(response.statusCode).to.equal(201);
+
+          request.post(reqUrl + '/effects/postToDrug', {form: 
+            {appKey: "TestKey", drugName: "Test", effectName: "DrugTest"}
+          }, function (error, response, body) {
+            Models.Drug.findOne({name: "Test"}).exec()
+              .then(function (drug) {
+                return Models.Effect.find({
+                  '_id': { $in: drug.effects }
+                }).exec();
+              }).then(function (effects) {
+                expect(_.pluck(effects, "name")).to.include("DrugTest");
+              }).then(function () {
+                return Models.Effect.findOne({name: "DrugTest"}).exec();
+              }).then(function (effect) {
+                return effect.remove();
+              }).then(function () {
+                done();
+              });
+          });
+        });
+      });
     });
   });
 
@@ -108,7 +185,7 @@ describe('Server', function () {
 
         Models.Tweet.findOne({link: "testlink"}).exec()
           .then(function (tweet) {
-            expect(tweet); // Found the test tweet.
+            expect(tweet);
             tweet.remove();
           }).then(function () {
             done();

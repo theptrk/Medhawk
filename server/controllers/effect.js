@@ -7,10 +7,13 @@ var Q               = require('q');
 module.exports.getEffectsFromDrug = function (req, res) {
   var data = req.body;
 
+
   Q(Drug.findOne({name: data.drugName})
     .exec())
     .then(function (drug) {
-      return drug.populate('effects');
+      return Models.Effect.find({
+        '_id': { $in: drug.effects }
+      }).exec();
     })
     .then(res.json.bind(res))
     .fail(controllerUtils.internalServerError(res));
@@ -19,10 +22,13 @@ module.exports.getEffectsFromDrug = function (req, res) {
 module.exports.postEffectToDrug = function (req, res) {
   var data = req.body;
 
-  Q.all([Effect.findOne({name: effectName}).exec(), Drug.findOne({name: data.drugName}).exec()])
-    .spread(function (effect, drug) {
-      drug.effects.push(effect._id);
-      return drug.save().exec();
+  Q.all([
+    Effect.findOne({name: data.effectName}).exec(), 
+    Drug.findOne({name: data.drugName}).exec()
+  ]).spread(function (effect, drug) {
+      return Drug.findOneAndUpdate(
+        {name: data.drugName}, 
+        {$push: {effects: effect._id}}).exec();
     })
     .then(controllerUtils.saveHandler(res))
     .fail(controllerUtils.internalServerError(res));

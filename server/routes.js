@@ -21,11 +21,11 @@ module.exports = function (app) {
 
   app.post("/drugs/post", utils.isApp, 
     utils.validateRequest(["name", "company"]), 
-    controllers.postTweet);
+    controllers.postDrug);
   
   app.post("/effects/post", utils.isApp, 
     utils.validateRequest(["name"]),
-    controllers.postTweet);
+    controllers.postEffect);
 
   app.post("/tweets/post", utils.isApp, 
     utils.validateRequest(["tweet", "link"]), 
