@@ -1,5 +1,5 @@
 var _      = require('lodash');
-var secret = require('./secret.js');
+var secret = require('../secret.js');
 
 module.exports.validateRequest = function (fields) {
   return function (req, res, next) {
