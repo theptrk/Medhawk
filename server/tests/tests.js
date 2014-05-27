@@ -205,6 +205,14 @@ describe('Server', function () {
       }).fail(console.error.bind(console));
     });
 
+    after(function (done) {
+      Q(Models.Emoji.findOneAndRemove({symptom: "TestSymptom"})
+        .exec())
+      .then(function () {
+        done();
+      });
+    });
+
     it('should return 200 on a get request', function (done) {
       request.get(reqUrl + '/emojis', {form: {appKey: "TestKey"}}, function (error, response, body) {
         expect(!!error).to.be.false;
