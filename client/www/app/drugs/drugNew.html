@@ -1,0 +1,29 @@
+<ion-header-bar class="bar-positive">
+  <button class="button button-icon icon ion-navicon"></button>
+  <h1 class="title">New Drug Entry</h1>
+</ion-header-bar>
+
+<ion-content class="has-header padding">
+
+    <div>
+      Drug Name:
+    </div>
+    <label class="item item-input">
+      <input type="text" placeHolder="{{ drugName }}" ng-model="drugName">
+    </label>
+
+    <div>
+      Company Name:
+    </div>
+    <label class="item item-input">
+      <input type="text" placeholder="" ng-model="drugCompany">
+    </label>
+
+    <div>
+      Company Twitter Handle:
+    </div>
+    <label class="item item-input">
+      <input type="text" placeholder="" ng-model="drugCompanyTwitter">
+    </label>
+
+</ion-content>
