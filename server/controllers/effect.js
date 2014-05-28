@@ -5,10 +5,7 @@ var controllerUtils = require('./controllerUtils.js');
 var Q               = require('q');
 
 module.exports.getEffectsFromDrug = function (req, res) {
-  var data = req.body;
-
-
-  Q(Drug.findOne({name: data.drugName})
+  Q(Drug.findOne({name: req.body.drugName || req.query.drugName})
     .exec())
     .then(function (drug) {
       return Models.Effect.find({

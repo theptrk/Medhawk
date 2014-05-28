@@ -4,9 +4,9 @@ var _ = require('lodash');
 module.exports.robustQuery = function (model, defaults) {
   return function (req, res) {
     Q(model.find(
-      req.query.matching || defaults.matching,
-      req.query.fields   || defaults.fields,
-      req.query.options  || defaults.options).exec())
+      req.query.matching || req.body.matching || defaults.matching,
+      req.query.fields   || req.body.fields   || defaults.fields,
+      req.query.options  || req.body.options  || defaults.options).exec())
     .then(res.json.bind(res))
     .fail(module.exports.internalServerError(res));
   };
@@ -30,7 +30,7 @@ module.exports.robustPost = function (model, fields) {
 
 module.exports.internalServerError = function (res) {
   return function (err) {
-    console.error(err);
+    console.error(err.stack);
     res.send(500, "Internal Server Error.");
   };
 };
