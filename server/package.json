@@ -29,12 +29,12 @@
     "body-parser": "^1.2.0",
     "chai": "^1.9.1",
     "cors": "^2.3.1",
+    "csv-parse": "0.0.4",
     "express": "^4.3.0",
     "lodash": "^2.4.1",
     "mocha": "^1.19.0",
     "mongoose": "^3.8.11",
     "morgan": "^1.1.1",
-    "node-csv": "^0.1.2",
     "q": "^1.0.1",
     "request": "^2.36.0"
   }
