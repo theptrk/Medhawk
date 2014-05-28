@@ -4,24 +4,28 @@
 </ion-header-bar>
 
 <ion-content has-header>
-  <div class="card">
-    <div class="item item-divider item-text-wrap">
-      What are you feeling?
-    </div>
-    <div class="item item-text-wrap">
-      <ul class="list">
-        <li class="item item-checkbox" ng-click="effect.selected = !effect.selected" ng-repeat="effect in effects">
-          {{ effect.name }}
-          <label class="checkbox">
-            <input type="checkbox">
-            <div class="track">
-              <div class="handle"></div>
-            </div>
-          </label>
-        </li>
-      </ul>
-    </div>
-  </div> 
+  <div class="list list-inset">
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="text" ng-model="query" placeholder="What are you feeling?">
+    </label>
+  </div>
+  <div class="list list-inset">
+    <ul class="">
+      <li class="item item-checkbox"  ng-repeat="effect in effects | filter:query">
+        {{ effect.name }}
+        <label class="checkbox">
+          <input type="checkbox" ng-model="effect.selected" ngChange="effect.selected = !effect.selected">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </li>
+    </ul>
+    <button ng-click="customEffect(query)" class="button button-block button-positive ion-plus">
+      Add {{ query }} as effect
+    </button>
+  </div>
 </ion-content>
 
 <div class="bar bar-footer bar-positive">
