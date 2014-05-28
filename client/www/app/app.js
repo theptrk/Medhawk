@@ -122,5 +122,5 @@ angular.module('starter', [
     })
 
 
-  $urlRouterProvider.otherwise('/share');
+  $urlRouterProvider.otherwise('/drugs/meds');
 })
