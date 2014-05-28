@@ -31,10 +31,19 @@ angular.module('drugServices', ['config', 'httpUtility'])
   };
 }])
 
-.factory('drugEffects', ['_makeRequesters', function(_makeRequesters) {
+.factory('drugEffects', ['_makeRequesters', 'httpPromise', 'configuration', function(_makeRequesters, httpPromise, configuration) {
+  var getEffectsFromDrug = function(drugName) {
+    return httpPromise({
+      url: configuration.SERVERPATH + '/effects/fromDrug',
+      params: { appKey: configuration.APPKEY, drugName: drugName }
+    });
+  };
+
   return {
     getEffects: _makeRequesters.makeGetter('/effects'),
     postEffect: _makeRequesters.makeSetter('/effects/post'),
+    getEffectsFromDrug: getEffectsFromDrug,
+    postEffectToDrug: _makeRequesters.makeSetter('/effects/postToDrug')
   };
 }])
 
