@@ -9,8 +9,10 @@ angular.module('drugs', ['drugServices'])
     $scope.effects = _.extend(effects, { selected: false });
   });
 
-  $scope.navEffects = function(drugName) {
-    $rootScope.drugName = drugName;
+  $scope.navEffects = function(drug) {
+    $rootScope.drugName = drug.name;
+    $rootScope.drugCompany = drug.company;
+    $rootScope.drugHandle = drug.handle;
     $state.go('drugs.effects');
   };
 
