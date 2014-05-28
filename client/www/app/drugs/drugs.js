@@ -1,6 +1,8 @@
 angular.module('drugs', ['drugServices'])
 
 .controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', '$q', function($scope, $rootScope, $state, drugNames, drugEffects, $q){
+  $scope.newEffects = [];
+
   drugNames.getDrugs().then(function (drugs) {
     $scope.drugs = drugs;
   });
@@ -18,6 +20,15 @@ angular.module('drugs', ['drugServices'])
   };
 
   // Add custom effect 
+  $scope.customEffect = function(effectName) {
+    if (_.pluck($scope.effects, 'name').indexOf(effectName) === -1) {
+      // add to current list as selected:true
+      $scope.effects.push({name: effectName, selected: true});
+      // post new effect to effect collection
+      $scope.newEffects.push(drugEffects.postEffect({name: effectName}));
+    }
+  };
+
   // Save selected effects to root scope and navigate to share page
   $scope.navShare = function() {
     $rootScope.drugEffects = _.filter($scope.effects, function(effect) {
