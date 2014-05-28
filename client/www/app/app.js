@@ -59,6 +59,16 @@ angular.module('starter', [
       }
     })
 
+    .state('drugs.new', {
+      url: '/new',
+      views: {
+        'drugs':{
+          templateUrl: 'app/drugs/drugNew.html',
+          controller: 'DrugCtrl'
+        }
+      }
+    })
+
     .state('share', {
       url: '/share',
       abstract: true,
