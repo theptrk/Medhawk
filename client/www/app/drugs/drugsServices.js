@@ -14,10 +14,13 @@ angular.module('drugServices', ['config', 'httpUtility'])
     return function (data) {
       return httpPromise({
         url: configuration.SERVERPATH + path,
-        type: 'POST',
-        params: _.extend({
+        method: 'POST',
+        data: _.extend({
           appKey: configuration.APPKEY,
-        }, data)
+        }, data),
+        headers: {
+          ContentType: 'application/json'
+        }
       });
     };
   };
@@ -31,14 +34,14 @@ angular.module('drugServices', ['config', 'httpUtility'])
 .factory('drugEffects', ['_makeRequesters', function(_makeRequesters) {
   return {
     getEffects: _makeRequesters.makeGetter('/effects'),
-    postEffect: _makeRequesters.makeSetter('/effects') 
+    postEffect: _makeRequesters.makeSetter('/effects/post'),
   };
 }])
 
 .factory('drugNames', ['_makeRequesters', function(_makeRequesters) {
   return {
     getDrugs: _makeRequesters.makeGetter('/drugs'),
-    postDrugs: _makeRequesters.makeSetter('/drugs')
+    postDrugs: _makeRequesters.makeSetter('/drugs/post')
   };
 }]);
 
