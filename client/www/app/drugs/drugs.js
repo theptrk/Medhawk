@@ -1,6 +1,6 @@
 angular.module('drugs', ['drugServices'])
 
-.controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', function($scope, $rootScope, $state, drugNames, drugEffects){
+.controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', '$q', function($scope, $rootScope, $state, drugNames, drugEffects, $q){
   drugNames.getDrugs().then(function (drugs) {
     $scope.drugs = drugs;
   });
