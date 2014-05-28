@@ -6,7 +6,7 @@ angular.module('drugs', ['drugServices'])
   });
 
   drugEffects.getEffects().then(function (effects) {
-    $scope.effects = _.extend(effects, { selected: false });
+    $scope.effects = effects;
   });
 
   // Save drug attributes to root scope and navigate to effects page
