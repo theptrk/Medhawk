@@ -23,6 +23,18 @@ angular.module('drugs', ['drugServices'])
     $rootScope.drugEffects = _.filter($scope.effects, function(effect) {
       return effect.selected;
     });
-    $state.go('share.tweet');
+
+    $q.all($scope.newEffects).then(function () {
+      return drugEffects.getEffectsFromDrug($rootScope.drugName);
+    }).then(function(effectsFromDrug) {
+      return $q.all(_.chain($rootScope.drugEffects)
+        .pluck('name')
+        .difference(effectsFromDrug)
+        .map(function(effectName) {
+          return drugEffects.postEffectToDrug({drugName: $rootScope.drugName, effectName: effectName});
+        }).value());
+    }).then(function() {
+      $state.go('share.tweet');
+    });
   };
 }]);
