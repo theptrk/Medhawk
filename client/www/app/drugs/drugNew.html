@@ -11,6 +11,11 @@
     <label class="item item-input">
       <input type="text" placeHolder="{{ drugName }}" ng-model="drugName">
     </label>
+    <label class="icon ion-alert-circled assertive" ng-hide="drugName.length">
+      Input Required!
+    </label>
+    <label class="icon ion-ios7-checkmark balanced" ng-show="drugName.length"></label>
+
 
     <div>
       Company Name:
@@ -18,6 +23,11 @@
     <label class="item item-input">
       <input type="text" placeholder="" ng-model="drugCompany">
     </label>
+    <label class="icon ion-alert-circled assertive" ng-hide="drugCompany.length">
+      Input Required!
+    </label>
+    <label class="icon ion-ios7-checkmark balanced" ng-show="drugCompany.length"></label>
+
 
     <div>
       Company Twitter Handle:
@@ -25,6 +35,11 @@
     <label class="item item-input">
       <input type="text" placeholder="" ng-model="drugCompanyTwitter">
     </label>
+    <label class="icon ion-alert-circled assertive" ng-hide="drugCompanyTwitter.length">
+      Input Required!
+    </label>
+    <label class="icon ion-ios7-checkmark balanced" ng-show="drugCompanyTwitter.length"></label>
+
 
     <button ng-click="navNew(query)" class="button button-block button-positive ion-plus">
       Add new drug
