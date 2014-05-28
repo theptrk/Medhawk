@@ -10,8 +10,8 @@
     </div>
     <div class="item item-text-wrap">
       <ul class="list">
-        <li class="item item-checkbox" ng-repeat="effect in effects">
-          {{ effect }}
+        <li class="item item-checkbox" ng-click="effect.selected = !effect.selected" ng-repeat="effect in effects">
+          {{ effect.name }}
           <label class="checkbox">
             <input type="checkbox">
             <div class="track">
@@ -25,7 +25,7 @@
 </ion-content>
 
 <div class="bar bar-footer bar-positive">
-  <button class="button button-clear pull-right icon icon-right ion-ios7-arrow-right">
+  <button ng-click="navShare()" class="button button-clear pull-right icon icon-right ion-ios7-arrow-right">
   Continue
   </button>
 </div>
