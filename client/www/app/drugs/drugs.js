@@ -48,4 +48,9 @@ angular.module('drugs', ['drugServices'])
       $state.go('share.tweet');
     });
   };
+
+  $scope.navNew = function(query) {
+    $rootScope.drugName = query || '';
+    $state.go('drugs.new');
+  };
 }]);
