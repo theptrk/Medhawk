@@ -3,9 +3,19 @@ h2 {
 }
 
 textarea {
-  height: 6em;
+  height: 150px;
+  font-size: 20px;
+  line-height: 1.2;
 }
 
 .drugField {
   margin-top: 10px;
+}
+
+img {
+  display: block;
+  margin: auto;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
