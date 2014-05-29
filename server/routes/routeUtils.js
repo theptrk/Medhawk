@@ -3,7 +3,7 @@ var secret = require('../secret.js');
 
 module.exports.validateRequest = function (fields) {
   return function (req, res, next) {
-    if(_.all(fields, function (field) { return field in req.body || field in req.query; })) {
+    if(_.all(fields, function (field) { return req.body[field] || req.query[field]; })) {
       next();
     } else {
       res.send(400, "Bad Request.");
