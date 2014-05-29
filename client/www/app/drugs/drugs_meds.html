@@ -11,8 +11,12 @@
     </label>
   </div>
   <div class="list list-inset">
-    <div class="item" ng-click="navEffects(drug)" ng-repeat="drug in drugs | filter:query | limitTo:6">
+    <div class="item" ng-click="navEffects(drug)" ng-repeat="drug in drugs | filter:query">
       <div>{{ drug.name }}</div>
     </div>
   </div>
+
+  <button ng-click="navNew(query)" class="button button-block button-positive ion-plus">
+    Add new drug
+  </button>
 </ion-content>

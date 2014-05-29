@@ -48,4 +48,24 @@ angular.module('drugs', ['drugServices'])
       $state.go('share.tweet');
     });
   };
+
+  // Save drug name to root scope and navigate to new drug entry page
+  $scope.navNew = function(query) {
+    $rootScope.drugName = query || '';
+    $state.go('drugs.new');
+  };
+
+  // Send new drug information to server and navigate to effects page
+  $scope.addDrug = function(name, company, twitter) {
+    var drug = {
+      name: name,
+      company: company,
+      handle: twitter
+    };
+
+    console.log(drug);
+    drugNames.postDrugs(drug).then(function() {
+      $scope.navEffects(drug);
+    });
+  };
 }]);
