@@ -33,7 +33,7 @@
       <input type="text" placeholder="" ng-model="twitter" name="twitter" maxlength="20">
     </label>
 
-    <button ng-click="addDrug(drugName, company, twitter)" class="button button-block button-positive ion-plus" ng-disable="true">
+    <button ng-click="addDrug(drugName, company, twitter)" class="button button-block button-positive ion-plus" ng-disabled="!drugName.length || !company.length || !twitter.length">
       Add new drug
     </button>
   </form>
