@@ -53,4 +53,16 @@ angular.module('drugs', ['drugServices'])
     $rootScope.drugName = query || '';
     $state.go('drugs.new');
   };
+
+  $scope.addDrug = function() {
+    var drug = {
+      name: $scope.drugName,
+      company: $scope.drugCompany,
+      handle: $scope.drugCompanyTwitter
+    };
+
+    drugNames.postDrugs(drug).then(function() {
+      $scope.navEffects(drug);
+    });
+  };
 }]);
