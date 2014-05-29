@@ -49,11 +49,13 @@ angular.module('drugs', ['drugServices'])
     });
   };
 
+  // Save drug name to root scope and navigate to new drug entry page
   $scope.navNew = function(query) {
     $rootScope.drugName = query || '';
     $state.go('drugs.new');
   };
 
+  // Send new drug information to server and navigate to effects page
   $scope.addDrug = function() {
     var drug = {
       name: $scope.drugName,
