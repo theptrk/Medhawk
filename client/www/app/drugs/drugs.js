@@ -67,7 +67,7 @@ angular.module('drugs', ['drugServices'])
       drug = {
         name: drugName,
         company: sanitizer.sanitizeName(company),
-        handle: twitter[0] === '@' ? twitter : '@' + twitter
+        handle: sanitizer.sanitizeTwitter(twitter)
       };
 
       drugNames.postDrugs(drug).then(function() {
