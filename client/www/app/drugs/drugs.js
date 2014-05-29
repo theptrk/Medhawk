@@ -1,6 +1,6 @@
 angular.module('drugs', ['drugServices'])
 
-.controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', '$q', function($scope, $rootScope, $state, drugNames, drugEffects, $q){
+.controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', '$q', 'sanitizer', function($scope, $rootScope, $state, drugNames, drugEffects, $q, sanitizer){
   $scope.newEffects = [];
 
   drugNames.getDrugs().then(function (drugs) {
@@ -56,16 +56,22 @@ angular.module('drugs', ['drugServices'])
   };
 
   // Send new drug information to server and navigate to effects page
-  $scope.addDrug = function(name, company, twitter) {
-    var drug = {
-      name: name,
-      company: company,
-      handle: twitter
-    };
+  $scope.addDrug = function(drugName, company, twitter) {
+    var drug;
+    drugName = sanitizer.sanitizeName(drugName);
 
-    console.log(drug);
-    drugNames.postDrugs(drug).then(function() {
+    if (drug = _.findWhere($scope.drugs, {name: drugName})) {
       $scope.navEffects(drug);
-    });
+    } else {
+      drug = {
+        name: drugName,
+        company: sanitizer.sanitizeName(company),
+        handle: twitter[0] === '@' ? twitter : '@' + twitter
+      };
+
+      drugNames.postDrugs(drug).then(function() {
+      $scope.navEffects(drug);
+      });
+    }
   };
 }]);
