@@ -60,6 +60,7 @@ angular.module('drugs', ['drugServices'])
     var drug;
     drugName = sanitizer.sanitizeName(drugName);
 
+    // check if drug already exists before sending to server
     if (drug = _.findWhere($scope.drugs, {name: drugName})) {
       $scope.navEffects(drug);
     } else {
@@ -70,7 +71,7 @@ angular.module('drugs', ['drugServices'])
       };
 
       drugNames.postDrugs(drug).then(function() {
-      $scope.navEffects(drug);
+        $scope.navEffects(drug);
       });
     }
   };
