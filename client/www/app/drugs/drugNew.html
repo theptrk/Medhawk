@@ -8,11 +8,11 @@
     
     <label class="item item-input drugField">
       <!-- validation -->
-      <div class="icon ion-alert-circled assertive" ng-show="!name.length && newDrug.name.$dirty"></div>
-      <div class="icon ion-ios7-checkmark balanced" ng-show="name.length"></div>
+      <div class="icon ion-alert-circled assertive" ng-show="!drugName.length && newDrug.name.$dirty"></div>
+      <div class="icon ion-ios7-checkmark balanced" ng-show="drugName.length"></div>
       <!-- end validation -->
       <span class="input-label">Drug Name</span>
-      <input type="text" placeholder="{{ drugName }}" ng-model="name" name="name" maxlength="20">
+      <input type="text" ng-model="drugName" name="name" maxlength="20">
     </label>
 
     <label class="item item-input drugField">
@@ -33,7 +33,7 @@
       <input type="text" placeholder="" ng-model="twitter" name="twitter" maxlength="20">
     </label>
 
-    <button ng-click="addDrug(name, company, twitter)" class="button button-block button-positive ion-plus" ng-disable="true">
+    <button ng-click="addDrug(drugName, company, twitter)" class="button button-block button-positive ion-plus" ng-disable="true">
       Add new drug
     </button>
   </form>
