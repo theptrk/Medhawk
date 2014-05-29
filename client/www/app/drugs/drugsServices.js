@@ -52,5 +52,16 @@ angular.module('drugServices', ['config', 'httpUtility'])
     getDrugs: _makeRequesters.makeGetter('/drugs'),
     postDrugs: _makeRequesters.makeSetter('/drugs/post')
   };
-}]);
+}])
+
+.factory('sanitizer', function() {
+  return {
+    sanitizeName: function(name) {
+      return name
+        .trim()
+        .replace(/\s+/g, ' ')
+        .replace(/^\w|-\w| \w/g, function(match) { return match.toUpperCase(); });
+    }
+  }
+});
 
