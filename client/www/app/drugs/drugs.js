@@ -56,13 +56,14 @@ angular.module('drugs', ['drugServices'])
   };
 
   // Send new drug information to server and navigate to effects page
-  $scope.addDrug = function() {
+  $scope.addDrug = function(name, company, twitter) {
     var drug = {
-      name: $scope.drugName,
-      company: $scope.drugCompany,
-      handle: $scope.drugCompanyTwitter
+      name: name,
+      company: company,
+      handle: twitter
     };
 
+    console.log(drug);
     drugNames.postDrugs(drug).then(function() {
       $scope.navEffects(drug);
     });
