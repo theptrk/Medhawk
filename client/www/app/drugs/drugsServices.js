@@ -61,6 +61,10 @@ angular.module('drugServices', ['config', 'httpUtility'])
         .trim()
         .replace(/\s+/g, ' ')
         .replace(/^\w|-\w| \w/g, function(match) { return match.toUpperCase(); });
+    },
+    sanitizeTwitter: function(handle) {
+      handle = handle.replace(/\s/g, '');
+      return handle[0] === '@' ? handle : '@' + handle;
     }
   }
 });
