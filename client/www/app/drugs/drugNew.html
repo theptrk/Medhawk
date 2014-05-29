@@ -4,45 +4,37 @@
 </ion-header-bar>
 
 <ion-content class="has-header padding">
-
-    <div>
-      Drug Name:
-    </div>
-    <label class="item item-input">
-      <input type="text" placeHolder="{{ drugName }}" ng-model="name">
+  <form name="newDrug">
+    
+    <label class="item item-input drugField">
+      <!-- validation -->
+      <div class="icon ion-alert-circled assertive" ng-show="!name.length && newDrug.name.$dirty"></div>
+      <div class="icon ion-ios7-checkmark balanced" ng-show="name.length"></div>
+      <!-- end validation -->
+      <span class="input-label">Drug Name</span>
+      <input type="text" placeholder="{{ drugName }}" ng-model="name" name="name" maxlength="20">
     </label>
-    <label class="icon ion-alert-circled assertive" ng-hide="name.length">
-      Input Required!
+
+    <label class="item item-input drugField">
+      <!-- validation -->
+      <div class="icon ion-alert-circled assertive" ng-show="!company.length && newDrug.company.$dirty"></div>
+      <div class="icon ion-ios7-checkmark balanced" ng-show="company.length"></div>
+      <!-- end validation -->
+      <span class="input-label">Company Name</span>
+      <input type="text" placeholder="" ng-model="company" name="company" maxlength="20">
     </label>
-    <label class="icon ion-ios7-checkmark balanced" ng-show="name.length"></label>
 
-
-    <div>
-      Company Name:
-    </div>
-    <label class="item item-input">
-      <input type="text" placeholder="" ng-model="company">
+    <label class="item item-input drugField">
+      <!-- validation -->
+      <div class="icon ion-alert-circled assertive" ng-show="!twitter.length && newDrug.twitter.$dirty"></div>
+      <div class="icon ion-ios7-checkmark balanced" ng-show="twitter.length"></div>
+      <!-- end validation -->
+      <span class="input-label">Company Twitter</span>
+      <input type="text" placeholder="" ng-model="twitter" name="twitter" maxlength="20">
     </label>
-    <label class="icon ion-alert-circled assertive" ng-hide="company.length">
-      Input Required!
-    </label>
-    <label class="icon ion-ios7-checkmark balanced" ng-show="company.length"></label>
 
-
-    <div>
-      Company Twitter Handle:
-    </div>
-    <label class="item item-input">
-      <input type="text" placeholder="" ng-model="twitter">
-    </label>
-    <label class="icon ion-alert-circled assertive" ng-hide="twitter.length">
-      Input Required!
-    </label>
-    <label class="icon ion-ios7-checkmark balanced" ng-show="twitter.length"></label>
-
-
-    <button ng-click="addDrug(name, company, twitter)" class="button button-block button-positive ion-plus">
+    <button ng-click="addDrug(name, company, twitter)" class="button button-block button-positive ion-plus" ng-disable="true">
       Add new drug
     </button>
-
+  </form>
 </ion-content>

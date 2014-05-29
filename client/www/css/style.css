@@ -5,3 +5,7 @@ h2 {
 textarea {
   height: 6em;
 }
+
+.drugField {
+  margin-top: 10px;
+}
