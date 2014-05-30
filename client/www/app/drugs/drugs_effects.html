@@ -15,7 +15,7 @@
       <li class="item item-checkbox"  ng-repeat="effect in effects | filter:query">
         {{ effect.name }}
         <label class="checkbox">
-          <input type="checkbox" ng-model="effect.selected" ngChange="effect.selected = !effect.selected">
+          <input type="checkbox" ng-model="effect.selected" ng-click="toggleSelection(effect)">
           <div class="track">
             <div class="handle"></div>
           </div>
@@ -29,7 +29,7 @@
 </ion-content>
 
 <div class="bar bar-footer bar-positive">
-  <button ng-click="navShare()" class="button button-clear pull-right icon icon-right ion-ios7-arrow-right">
+  <button ng-click="navShare()" ng-show="selectedEffects.length" class="button button-clear pull-right icon icon-right ion-ios7-arrow-right">
   Continue
   </button>
 </div>

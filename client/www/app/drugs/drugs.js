@@ -2,6 +2,7 @@ angular.module('drugs', ['drugServices'])
 
 .controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', '$q', 'sanitizer', function($scope, $rootScope, $state, drugNames, drugEffects, $q, sanitizer){
   $scope.newEffects = [];
+  $scope.selectedEffects = [];
 
   drugNames.getDrugs().then(function (drugs) {
     $scope.drugs = drugs;
@@ -29,11 +30,18 @@ angular.module('drugs', ['drugServices'])
     }
   };
 
+  $scope.toggleSelection = function(selection) {
+    var index = _.pluck($scope.selectedEffects, 'name').indexOf(selection.name);
+    if (index >= 0) {
+      $scope.selectedEffects.splice(index, 1);
+    } else {
+      $scope.selectedEffects.push(selection);
+    }
+  }
+
   // Save selected effects to root scope and navigate to share page
   $scope.navShare = function() {
-    $rootScope.drugEffects = _.filter($scope.effects, function(effect) {
-      return effect.selected;
-    });
+    $rootScope.drugEffects = $scope.selectedEffects;
 
     $q.all($scope.newEffects).then(function () {
       return drugEffects.getEffectsFromDrug($rootScope.drugName);
