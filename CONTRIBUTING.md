@@ -13,6 +13,7 @@ git remote add upstream https://github.com/MedHawk/Medhawk.git
 Your branch should follow this naming convention:
 * `feat/thefeature` for feature additions
 * `bug/thebug` for bugfixes
+* `test/thetest` for test files
 * `doc/description` for documentation changes/style fixes
 
 These commands will help you do this:
