@@ -7,7 +7,7 @@ var karma = require('gulp-karma');
 var files = {
   scripts: ['./www/app/**/*.js', './tests/**/*.js'],
   tests: ['./tests/**/*.js']
-}
+};
 
 gulp.task('lint', function () {
   return gulp.src(files.scripts)
