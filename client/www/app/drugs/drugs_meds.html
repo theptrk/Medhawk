@@ -10,7 +10,7 @@
     </label>
   </div>
   <div class="list list-inset">
-    <div class="item" ng-click="navEffects(drug)" ng-repeat="drug in drugs | filter:query">
+    <div class="item" ng-click="navEffects(drug)" ng-repeat="drug in drugs | filter:query | orderBy:'name'">
       <div>{{ drug.name }}</div>
     </div>
   </div>
