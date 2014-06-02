@@ -21,4 +21,19 @@ angular.module('share', [])
   $scope.tweetMessage = "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + 
     ". @FDA " + $rootScope.drugHandle +
     " #ThisDrugSucks via @Medhawk";
+
+  $scope.doLogin = function(){
+    TwitterLib.init();
+  };
+
+  $scope.doTweet = function() {
+    TwitterLib.tweet(this.tweetMessage).then(function(_data) {
+      alert("tweet success");
+      console.log(_data);
+      alert(_data);
+
+    }, function(_error) {
+      console.log("tweet error" + JSON.stringify(_error));
+    });
+  };
 }]);
