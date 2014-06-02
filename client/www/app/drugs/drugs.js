@@ -25,6 +25,7 @@ angular.module('drugs', ['drugServices'])
     if (_.pluck($scope.effects, 'name').indexOf(effectName) === -1) {
       // add to current list as selected:true
       $scope.effects.push({name: effectName, selected: true});
+      $scope.selectedEffects.push({name: effectName});
       // post new effect to effect collection
       $scope.newEffects.push(drugEffects.postEffect({name: effectName}));
     }
@@ -69,7 +70,8 @@ angular.module('drugs', ['drugServices'])
     drugName = sanitizer.sanitizeName(drugName);
 
     // check if drug already exists before sending to server
-    if (drug = _.findWhere($scope.drugs, {name: drugName})) {
+    drug = _.findWhere($scope.drugs, {name: drugName});
+    if (drug) {
       $scope.navEffects(drug);
     } else {
       drug = {
