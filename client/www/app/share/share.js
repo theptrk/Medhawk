@@ -27,7 +27,7 @@ angular.module('share', ['config', 'twitterLib'])
   };
 
   $scope.doTweet = function() {
-    TwitterLib.tweet(this.effectString).then(function(_data) {
+    TwitterLib.tweet(this.tweetMessage).then(function(_data) {
       alert("tweet success");
       console.log(_data);
       alert(_data);
