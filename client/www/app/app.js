@@ -123,4 +123,4 @@ angular.module('starter', [
 
 
   $urlRouterProvider.otherwise('/drugs/meds');
-})
+});

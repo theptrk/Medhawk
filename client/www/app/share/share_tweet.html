@@ -12,20 +12,24 @@
 
   <div class="list list-inset">
     <label class="item item-input">
-      <textarea placeholder="Create your message">{{ tweetMessage }}</textarea>
+      <textarea placeholder="Create your message" ng-model="tweetMessage"></textarea>
     </label>
   </div>
 
   <div class="row">
 
-    <div class="col col-50" ng-click="">
+    <div class="col col-50" ng-click="doLogin()">
       <img src="img/twitter.png">
     </div>
 
-    <div class="col col-50" ng-click="">
+    <div class="col col-50">
       <img src="img/facebook.png">
     </div>
    
+  </div>
+  
+  <div class="row">
+    <p ng-click="doLogout()">Log out</p>
   </div>
 
 </ion-content>
