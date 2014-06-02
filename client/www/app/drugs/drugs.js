@@ -25,6 +25,7 @@ angular.module('drugs', ['drugServices'])
     if (_.pluck($scope.effects, 'name').indexOf(effectName) === -1) {
       // add to current list as selected:true
       $scope.effects.push({name: effectName, selected: true});
+      $scope.selectedEffects.push({name: effectName});
       // post new effect to effect collection
       $scope.newEffects.push(drugEffects.postEffect({name: effectName}));
     }
