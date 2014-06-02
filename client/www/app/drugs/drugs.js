@@ -1,6 +1,6 @@
 angular.module('drugs', ['drugServices'])
 
-.controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', '$q', 'sanitizer', function($scope, $rootScope, $state, drugNames, drugEffects, $q, sanitizer){
+.controller('DrugCtrl', ['$scope', '$rootScope', '$state', 'drugNames', 'drugEffects', '$q', 'sanitizer', '$ionicNavBarDelegate', function($scope, $rootScope, $state, drugNames, drugEffects, $q, sanitizer, $ionicNavBarDelegate){
   $scope.newEffects = [];
   $scope.selectedEffects = [];
 
@@ -37,7 +37,7 @@ angular.module('drugs', ['drugServices'])
     } else {
       $scope.selectedEffects.push(selection);
     }
-  }
+  };
 
   // Save selected effects to root scope and navigate to share page
   $scope.navShare = function() {
@@ -82,5 +82,9 @@ angular.module('drugs', ['drugServices'])
         $scope.navEffects(drug);
       });
     }
+  };
+
+  $rootScope.back = function() {
+    $ionicNavBarDelegate.back();
   };
 }]);
