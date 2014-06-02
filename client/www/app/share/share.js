@@ -23,7 +23,15 @@ angular.module('share', ['config', 'twitterLib'])
     " #ThisDrugSucks via @Medhawk";
 
   $scope.doLogin = function(){
-    TwitterLib.init();
+    TwitterLib.init().then(function(data){
+      alert(data);
+      console.log(data);
+      $scope.doTweet();
+    });
+  };
+  
+  $scope.doLogout = function () {
+      TwitterLib.logOut();
   };
 
   $scope.doTweet = function() {

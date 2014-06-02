@@ -107,7 +107,8 @@ angular.module('twitterLib', ['config'])
           oauth = OAuth(options);
           oauth.fetchRequestToken(openAuthoriseWindow, failureHandler);
         }
-          return deferredLogin.promise;
+        
+        return deferredLogin.promise;
       }, // <=== init ===>
 
       /**
