@@ -213,6 +213,7 @@ angular.module('twitterLib', ['config'])
        * @param  {[base 64 encoded image]} _media
        */
       tweet: function (_message, _media) {
+        // dev
         alert('=== into tweet ===');
         console.log(_media);
 
@@ -280,10 +281,10 @@ angular.module('twitterLib', ['config'])
 
         _reqOptions = angular.extend(_reqOptions, {
           success: function (data) {
-              deferred.resolve(JSON.parse(data.text));
+            deferred.resolve(JSON.parse(data.text));
           },
           failure: function (error) {
-              deferred.reject(JSON.parse(error.text));
+            deferred.reject(JSON.parse(error.text));
           }
         });
 
