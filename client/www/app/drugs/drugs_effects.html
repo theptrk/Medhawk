@@ -12,7 +12,7 @@
   </div>
   <div class="list list-inset">
     <ul class="">
-      <li class="item item-checkbox"  ng-repeat="effect in effects | filter:query">
+      <li class="item item-checkbox"  ng-repeat="effect in effects | filter:query | orderBy:'name'">
         {{ effect.name }}
         <label class="checkbox">
           <input type="checkbox" ng-model="effect.selected" ng-click="toggleSelection(effect)">
