@@ -5,3 +5,6 @@ client/node_modules/
 client/bower_components/
 client/secret.js
 client/www/lib/
+client/platforms/
+
+*DS_Store
