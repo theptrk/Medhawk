@@ -1,6 +1,6 @@
-angular.module('share', [])
+angular.module('share', ['config', 'twitterLib'])
 
-.controller('ShareCtrl', ['$rootScope', '$scope', function($rootScope, $scope){
+.controller('ShareCtrl', ['$rootScope', '$scope', '$http', 'TwitterLib', 'configuration', function($rootScope, $scope, $http, TwitterLib, configuration){
   var effects = _.pluck($rootScope.drugEffects, "name");
   var effectString = "";
 
