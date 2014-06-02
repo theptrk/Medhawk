@@ -1,32 +1,7 @@
-var Q = require('q');
-var _ = require('lodash');
+var mControllers = require('mongoose-controllers');
 
-module.exports.robustQuery = function (model, defaults) {
-  return function (req, res) {
-    Q(model.find(
-      req.query.matching || req.body.matching || defaults.matching,
-      req.query.fields   || req.body.fields   || defaults.fields,
-      req.query.options  || req.body.options  || defaults.options).exec())
-    .then(res.json.bind(res))
-    .fail(module.exports.internalServerError(res));
-  };
-};
-
-var buildCreate = function (fields, body) {
-  var result = {};
-  _.each(fields, function (val, key) {
-    result[key] = body[val];
-  });
-  return result;
-};
-
-module.exports.robustPost = function (model, fields) {
-  return function (req, res) {
-    Q(model.create(buildCreate(fields, req.body)))
-      .then(module.exports.saveHandler(res))
-      .fail(module.exports.internalServerError(res));
-  };
-};
+module.exports.robustQuery = mControllers.get;
+module.exports.robustPost = mControllers.post;
 
 module.exports.internalServerError = function (res) {
   return function (err) {
