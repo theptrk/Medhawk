@@ -7,7 +7,8 @@ angular.module('starter', [
   'ionic',
   'drugs',
   'share',
-  'user'
+  'user',
+  'home'
   ])
 
 .run(function($ionicPlatform) {
@@ -31,6 +32,22 @@ angular.module('starter', [
       url: '/',
       abstract: true,
       templateUrl: 'app/main.html'
+    })
+
+    .state('home', {
+      url: '/home',
+      abstract: true,
+      templateUrl: 'app/main.html'
+    })
+
+    .state('home.home', {
+      url: '/home',
+      views: {
+        'home': {
+          templateUrl: 'app/home/home.html',
+          controller: 'HomeCtrl'
+        }
+      }
     })
 
     .state('drugs', {
@@ -122,5 +139,5 @@ angular.module('starter', [
     })
 
 
-  $urlRouterProvider.otherwise('/drugs/meds');
+  $urlRouterProvider.otherwise('/home/home');
 });
