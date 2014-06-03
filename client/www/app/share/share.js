@@ -45,28 +45,56 @@ angular.module('share', ['config', 'twitterLib'])
     ". @FDA " + $rootScope.drugHandle +
     " #ThisDrugSucks via @Medhawk";
 
-  $scope.doLogin = function(){
-    TwitterLib.init().then(function(data){
-      alert(data);
-      console.log(data);
-      $scope.doTweet();
-    });
+
+  $scope.doLogin = function () {
+      TwitterLib.init().then(function (data) {
+        $scope.prepareTweet();
+          alert(JSON.stringify(data));
+      }, function error(error) {
+          alert(JSON.stringify(error));
+      });
   };
-  
+
   $scope.doLogout = function () {
       TwitterLib.logOut();
   };
+  
+  $scope.prepareTweet = function(){
+    var imageUrl = "http://localhost:3000/emojis/" + $scope.emoji;
+    var xhr = new XMLHttpRequest();
 
-  $scope.doTweet = function() {
-    TwitterLib.tweet($scope.tweetMessage).then(function(_data) {
-      alert("tweet success");
-      console.log(_data);
-      alert(_data);
+    xhr.onreadystatechange = function(){
 
-    }, function(_error) {
-      console.log("tweet error" + JSON.stringify(_error));
+      if (this.readyState == 4 && this.status == 200){
+        var reader = new window.FileReader();
+
+        reader.onloadend = function() {
+          var base64data = reader.result;
+          base64data = base64data.split(",");
+          base64data = base64data[1];                  
+          $scope.doTweet( base64data );
+        };
+
+        reader.readAsDataURL(this.response); 
+        alert('first');
+      }
+    };
+
+    xhr.open('GET', imageUrl);
+    xhr.responseType = 'blob';
+    xhr.send();    
+  };
+
+  $scope.doTweet = function (picture) {
+    TwitterLib.tweet($scope.tweetMessage, picture).then(function (data) {
+        alert("tweet success");
+        console.log(data);
+        alert(data);
+    }, function (error) {
+        console.log("tweet error" + JSON.stringify(error));
     });
   };
+
 
   $scope.attachEmoji = function(filename) {
     $rootScope.emoji = filename;
