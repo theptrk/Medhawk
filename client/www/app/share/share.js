@@ -1,6 +1,6 @@
 angular.module('share', ['config', 'twitterLib'])
 
-.controller('ShareCtrl', ['$rootScope', '$scope', '$http', 'TwitterLib', 'configuration', function($rootScope, $scope, $http, TwitterLib, configuration){
+.controller('ShareCtrl', ['$rootScope', '$scope', '$http', 'TwitterLib', 'configuration', '$state', function($rootScope, $scope, $http, TwitterLib, configuration, $state){
   var effects = _.pluck($rootScope.drugEffects, "name");
   var effectString = "";
   $scope.hideEmojis = true;
@@ -99,6 +99,7 @@ angular.module('share', ['config', 'twitterLib'])
   $scope.attachEmoji = function(filename) {
     $rootScope.emoji = filename;
     $scope.hideEmojis = true;
+    $state.go('share.tweet');
   };
 
   $scope.toggleEmoji = function() {
