@@ -14,4 +14,5 @@ module.exports = function (app) {
     console.log("Request Params:", req.query);
     next();
   });
+  app.use(express.static('/emojis', __dirname + '/emojis'));
 };
