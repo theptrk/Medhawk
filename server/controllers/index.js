@@ -23,12 +23,6 @@ module.exports = {
     options: {}
   }),
 
-  getEmoji: controllerUtils.robustQuery(Models.Emoji, {
-    matching: {},
-    fields: "symptom link",
-    options: {}
-  }),
-
   postDrug: controllerUtils.robustPost(Models.Drug, {
     name: "name",
     company: "company",
@@ -42,11 +36,6 @@ module.exports = {
   postTweet: controllerUtils.robustPost(Models.Tweet, {
     link: 'link',
     tweet: 'tweet'
-  }),
-
-  postEmoji: controllerUtils.robustPost(Models.Emoji, {
-    symptom: "symptom",
-    link: "link"
   }),
 
   postEffectToDrug: EffectController.postEffectToDrug,
