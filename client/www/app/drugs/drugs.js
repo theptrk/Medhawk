@@ -54,7 +54,7 @@ angular.module('drugs', ['drugServices'])
           return drugEffects.postEffectToDrug({drugName: $rootScope.drugName, effectName: effectName});
         }).value());
     }).then(function() {
-      $state.go('share.tweet');
+      $state.go('share.visual');
     });
   };
 

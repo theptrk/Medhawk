@@ -1,10 +1,10 @@
-h2 {
+h3 {
   text-align: center;
 }
 
 textarea {
-  height: 150px;
-  font-size: 20px;
+  height: 130px;
+  font-size: 18px;
   line-height: 1.2;
 }
 
@@ -23,4 +23,15 @@ img {
 .emoji {
   height: 25%;
   width: 25%;
+}
+
+.twitter {
+  font-weight: bold;
+  font-size: 20px;
+  font-color: #292f33;
+}
+
+.twitterBlue {
+  color: #55ACEE;
+  font-size: 22px;
 }
