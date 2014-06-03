@@ -139,5 +139,5 @@ angular.module('starter', [
     })
 
 
-  $urlRouterProvider.otherwise('/drugs/meds');
+  $urlRouterProvider.otherwise('/home/home');
 });
