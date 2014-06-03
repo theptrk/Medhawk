@@ -3,6 +3,29 @@ angular.module('share', ['config', 'twitterLib'])
 .controller('ShareCtrl', ['$rootScope', '$scope', '$http', 'TwitterLib', 'configuration', function($rootScope, $scope, $http, TwitterLib, configuration){
   var effects = _.pluck($rootScope.drugEffects, "name");
   var effectString = "";
+  $scope.hideEmojis = true;
+  $scope.emojiFilenames = [
+    'agitated.png',
+    'angry.png',
+    'annoyed.png',
+    'batty.png',
+    'cold.png',
+    'distracted.png',
+    'fever.png',
+    'gloomy.png',
+    'goofy.png',
+    'green.png',
+    'hopeless.png',
+    'hungry.png',
+    'manic.png',
+    'pessimistic.png',
+    'sick.png',
+    'sleepy.png',
+    'surprised.png',
+    'tearful.png',
+    'tired.png',
+    'worried.png'
+  ];
 
   if (effects.length === 1) {
     effectString = effects[0];
@@ -43,5 +66,14 @@ angular.module('share', ['config', 'twitterLib'])
     }, function(_error) {
       console.log("tweet error" + JSON.stringify(_error));
     });
+  };
+
+  $scope.attachEmoji = function(filename) {
+    $rootScope.emoji = filename;
+    $scope.hideEmojis = true;
+  };
+
+  $scope.toggleEmoji = function() {
+    $scope.hideEmojis = !$scope.hideEmojis;
   };
 }]);

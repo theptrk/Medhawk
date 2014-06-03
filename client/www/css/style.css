@@ -19,3 +19,8 @@ img {
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+
+.emoji {
+  height: 25%;
+  width: 25%;
+}

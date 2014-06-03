@@ -16,14 +16,23 @@
     </label>
   </div>
 
+  <div class="row" ng-hide="!hideEmojis">
+    <button ng-click="toggleEmoji()">Add emoji</button>
+    <img class="emoji" src="img/emojis/{{ emoji }}" ng-show="emoji">
+  </div>
+
+  <div class="row" ng-hide="hideEmojis">
+    <div class="list list-inset">
+      <div class="item col" ng-repeat="emojiFilename in emojiFilenames" ng-click="attachEmoji(emojiFilename)">
+        <img class="emoji" src="img/emojis/{{ emojiFilename }}">
+      </div>
+    </div>
+  </div>
+
   <div class="row">
 
-    <div class="col col-50" ng-click="doLogin()">
+    <div class="col" ng-click="doLogin()">
       <img src="img/twitter.png">
-    </div>
-
-    <div class="col col-50">
-      <img src="img/facebook.png">
     </div>
    
   </div>
