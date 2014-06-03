@@ -3,7 +3,7 @@
 
 var expect  = require('chai').expect;
 var app     = require('../server.js');
-var db      = require('../mongoose'); 
+var db      = require('../mongoose');
 var Q       = require('q');
 var Models  = require('../models');
 var utils   = require('./testUtil.js');
@@ -61,19 +61,19 @@ describe('Server', function () {
     });
 
     it('should support robust queries', function (done) {
-      request.get(reqUrl + '/drugs', {form: 
+      request.get(reqUrl + '/drugs', {form:
         {appKey: "TestKey", matching: {company: "Test"}}
       }, function (error, response, body) {
         expect(!!error).to.be.false;
         expect(JSON.parse(body)[0].name).to.equal("Test");
         done();
-      });      
+      });
     });
 
     describe('/drugs/post', function () {
       it('should return 201 and post to the database on a post request.', function (done) {
-        request.post(reqUrl + '/drugs/post', {form: 
-          {appKey: "TestKey", name: "testpost", company: "testpost", handle: "testpost"} 
+        request.post(reqUrl + '/drugs/post', {form:
+          {appKey: "TestKey", name: "testpost", company: "testpost", handle: "testpost"}
         }, function (error, response, body) {
           expect(!!error).to.be.false;
           expect(response.statusCode).to.equal(201);
@@ -108,7 +108,7 @@ describe('Server', function () {
     });
 
     it('should support robust queries', function (done) {
-      request.get(reqUrl + '/effects', {form: 
+      request.get(reqUrl + '/effects', {form:
         {appKey: "TestKey", matching: {name: "TestEffect"}}
       }, function (error, response, body) {
         expect(!!error).to.be.false;
@@ -130,8 +130,8 @@ describe('Server', function () {
 
     describe('/effects/post', function () {
       it('should return 201 and post to the database on a post request.', function (done) {
-        request.post(reqUrl + '/effects/post', {form: 
-          {appKey: "TestKey", name: "testpost"} 
+        request.post(reqUrl + '/effects/post', {form:
+          {appKey: "TestKey", name: "testpost"}
         }, function (error, response, body) {
           expect(!!error).to.be.false;
           expect(response.statusCode).to.equal(201);
@@ -147,13 +147,13 @@ describe('Server', function () {
       });
 
       it('should post to a drug at /postToDrug', function (done) {
-        request.post(reqUrl + '/effects/post', {form: 
-          {appKey: "TestKey", name: "DrugTest"} 
+        request.post(reqUrl + '/effects/post', {form:
+          {appKey: "TestKey", name: "DrugTest"}
         }, function (error, response, body) {
           expect(!!error).to.be.false;
           expect(response.statusCode).to.equal(201);
 
-          request.post(reqUrl + '/effects/postToDrug', {form: 
+          request.post(reqUrl + '/effects/postToDrug', {form:
             {appKey: "TestKey", drugName: "Test", effectName: "DrugTest"}
           }, function (error, response, body) {
             Models.Drug.findOne({name: "Test"}).exec()
@@ -178,7 +178,7 @@ describe('Server', function () {
 
   describe('/tweets', function () {
     it('should return 201 on a post request and post a tweet to the database', function (done) {
-      request.post(reqUrl + '/tweets/post', {form: 
+      request.post(reqUrl + '/tweets/post', {form:
         {appKey: "TestKey", link: "testlink", tweet: "testtweet"}
       }, function (error, response, body) {
         expect(!!error).to.be.false;
@@ -191,70 +191,6 @@ describe('Server', function () {
           }).then(function () {
             done();
           });
-      });
-    });
-  });
-
-  describe('/emojis', function() {
-    before(function (done) {
-      Q(Models.Emoji.create({
-        symptom: "TestSymptom",
-        link: "TestEmojiLink"
-      })).then(function () {
-        done();
-      }).fail(console.error.bind(console));
-    });
-
-    after(function (done) {
-      Q(Models.Emoji.findOneAndRemove({symptom: "TestSymptom"})
-        .exec())
-      .then(function () {
-        done();
-      });
-    });
-
-    it('should return 200 on a get request', function (done) {
-      request.get(reqUrl + '/emojis', {form: {appKey: "TestKey"}}, function (error, response, body) {
-        expect(!!error).to.be.false;
-        expect(response.statusCode).to.equal(200);
-        done();
-      });
-    });
-
-    it('should return the right emojis', function (done) {
-      request.get(reqUrl + '/emojis', {form: {appKey: "TestKey"}}, function (error, response, body) {
-        expect(!!error).to.be.false;
-        expect(_.pluck(JSON.parse(body), 'symptom')).to.include("TestSymptom");
-        done();
-      });
-    });
-
-    it('should support robust queries', function (done) {
-      request.get(reqUrl + '/emojis', {form: 
-        {appKey: "TestKey", matching: {symptom: "TestSymptom"}}
-      }, function (error, response, body) {
-        expect(!!error).to.be.false;
-        expect(JSON.parse(body)[0].link).to.equal("TestEmojiLink");
-        done();
-      });      
-    });
-
-    describe('/emojis/post', function () {
-      it('should return 201 and post to the database on a post request.', function (done) {
-        request.post(reqUrl + '/emojis/post', {form: 
-          {appKey: "TestKey", symptom: "testpost", link: "testpost"} 
-        }, function (error, response, body) {
-          expect(!!error).to.be.false;
-          expect(response.statusCode).to.equal(201);
-
-          Models.Emoji.findOne({symptom: "testpost"}).exec()
-            .then(function (emoji) {
-              expect(emoji);
-              emoji.remove();
-            }).then(function () {
-              done();
-            });
-        });
       });
     });
   });
