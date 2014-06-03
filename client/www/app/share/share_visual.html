@@ -1,7 +1,14 @@
-<ion-header-bar class="bar-stable">
-  <h1 class="title">Share</h1>
+<ion-header-bar class="bar-positive">
+  <button class="button button-icon icon ion-ios7-arrow-back" ng-click="back()"></button>
+  <h1 class="title">Select Your Emoji</h1>
 </ion-header-bar>
 
 <ion-content has-header>
-  <h1>Share Visual</h1>
+   <div class="row">
+    <div class="list list-inset">
+      <div class="item col" ng-repeat="emojiFilename in emojiFilenames" ng-click="attachEmoji(emojiFilename)">
+        <img class="emoji" src="img/emojis/{{ emojiFilename }}">
+      </div>
+    </div>
+  </div>
 </ion-content>
