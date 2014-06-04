@@ -60,33 +60,25 @@ angular.module('share', ['config', 'twitterLib'])
   };
   
   $scope.prepareTweet = function(){
-    var imageUrl = "http://localhost:3000/emojis/" + $scope.emoji;
-    var xhr = new XMLHttpRequest();
 
-    xhr.onreadystatechange = function(){
-
-      if (this.readyState == 4 && this.status == 200){
-        var reader = new window.FileReader();
-
+    alert('first');
+    var reader = new window.FileReader();
+    $http({ method:"GET", url: "http://localhost:3000/emojis/" + $scope.emoji, responseType: "blob"})
+      .success(function(data){
+        reader.readAsDataURL(data);
         reader.onloadend = function() {
+
+          alert('onloadend');
           var base64data = reader.result;
           base64data = base64data.split(",");
           base64data = base64data[1];                  
           $scope.doTweet( base64data );
         };
 
-        reader.readAsDataURL(this.response); 
-        alert('first');
-      }
-    };
-
-    xhr.open('GET', imageUrl);
-    xhr.responseType = 'blob';
-    xhr.send();    
+      });
   };
-
   $scope.doTweet = function (picture) {
-    TwitterLib.tweet($scope.tweetMessage, picture).then(function (data) {
+    TwitterLib.tweet("$scope.tweetMessage", picture).then(function (data) {
         alert("tweet success");
         console.log(data);
         alert(data);
