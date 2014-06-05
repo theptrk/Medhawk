@@ -2,7 +2,7 @@ angular.module('config', [])
 
 .factory('configuration', function (){
   return {
-    SERVERPATH: 'http://localhost:3000',
+    SERVERPATH: 'http://10.4.28.247:3000',
     APPKEY: 'TestKey',
     oauthSettings: {
       consumerKey: 'hG5JkrDkarl5cPmjc94Lwsu7a',

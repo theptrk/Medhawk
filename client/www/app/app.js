@@ -138,6 +138,5 @@ angular.module('starter', [
       }
     })
 
-
   $urlRouterProvider.otherwise('/home/home');
 });

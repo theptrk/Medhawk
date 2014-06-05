@@ -142,10 +142,6 @@ angular.module('twitterLib', ['config'])
 
         };
 
-        /**
-         *
-         * @param _args
-         */
         var failureHandler = function (_args) {
             console.log("ERROR - oauth_verifier: " + JSON.stringify(_args));
             _deferred.reject({error: 'user_cancelled', error_description: _args });
@@ -171,8 +167,6 @@ angular.module('twitterLib', ['config'])
           }
           oauth.setVerifier(verifier);
           oauth.fetchAccessToken(successHandler, failureHandler);
-        } else {
-            // Cylons 
         }
       }, // <=== inAppBrowserLoadHandler ===>
 
@@ -182,7 +176,7 @@ angular.module('twitterLib', ['config'])
        */
       verify: function (_deferred) {
         var deferred = _deferred || $q.defer();
-        var storedAccessData, rawData = localStorage.getItem(twitterKey);
+        var storedAccessData, rawData = $window.localStorage.getItem(twitterKey);
         storedAccessData = JSON.parse(rawData);
 
         // jsOAuth will take care of else for app; we need to send only the options
@@ -192,16 +186,11 @@ angular.module('twitterLib', ['config'])
 
         oauth.get('https://api.twitter.com/1.1/account/verify_credentials.json?skip_status=true',
           function (data) {
-
             // Set $rootScope data to the text version of all data sent back from server
             $rootScope.data = JSON.parse(data.text);
-            console.log("in verify resolved " + data.text);
-
-            deferred.resolve(JSON.parse(data.text));
-          }, function (_error) {
-
-            console.log("in verify reject " + _error);
-            deferred.reject(JSON.parse(_error));
+            deferred.resolve($rootScope.data);
+          }, function (error) {
+            deferred.reject(error);
           }
         );
 
@@ -209,62 +198,42 @@ angular.module('twitterLib', ['config'])
       },
 
       /**
-       * TODO send to twitter window
-       * @param  {[string]} _message
-       * @param  {[base 64 encoded image]} _media
+       * Send to twitter window
+       * @param  {[string]} message
+       * @param  {[base 64 encoded image]} media
        */
-      tweet: function (_message, _media) {
-        // dev
-        alert('=== into tweet ===');
-        console.log(_media);
+      tweet: function (message, media) {
+        return Twitter.verify().then(function () {
+          var cb = new Codebird();
+          cb.setConsumerKey("hG5JkrDkarl5cPmjc94Lwsu7a", "3s0oxghx1yQ21ag8r7R5KnOVWRJXuXHsjJvjCmdJRxj20FKUIv");
+          cb.setToken(oauth.getAccessToken()[0], oauth.getAccessToken()[1]);
 
-        var deferred = $q.defer();
-        return deferred.promise
-          .then(Twitter.verify().then(function () {
-            console.log("verification success");
-            
-            var cb = new Codebird(); // risky 
-            cb.setConsumerKey("hG5JkrDkarl5cPmjc94Lwsu7a", "3s0oxghx1yQ21ag8r7R5KnOVWRJXuXHsjJvjCmdJRxj20FKUIv");
-            cb.setToken(oauth.getAccessToken()[0], oauth.getAccessToken()[1]);
-
-            if (_media !== undefined) {
-              tUrl = 'https://api.twitter.com/1.1/statuses/update_with_media.json';
-              tParams = {
-                'status': _message,
+          if (media !== undefined) {
+            var deferred = $q.defer();
+            cb.__call(
+              "statuses_updateWithMedia", {
+                'status': message,
                 'trim_user': 'true',
-                'media[]': _media
-              };
-
-              return cb.__call(
-                "statuses_updateWithMedia", // path in camel case
-                tParams,
-                function (reply) { // cb from cb
-                    console.log(reply);
-                    var deferred = $q.defer();
-                    deferred.resolve(reply);
-                    return deferred.promise;
-                }
-              );
-            } else {
-              tUrl = 'https://api.twitter.com/1.1/statuses/update.json';
-              tParams = {
-                  'status': _message,
-                  'trim_user': 'true',
-              };
-            }
+                'media[]': media
+              }, function (reply) { // cb from cb
+                console.log(reply);
+                deferred.resolve(reply);
+              });
+            return deferred.promise;
+          } else {
             return Twitter.apiPostCall({
-              url: tUrl,
-              params: tParams
+              url: 'https://api.twitter.com/1.1/statuses/update.json',
+              params: {
+                'status': message,
+                'trim_user': 'true',
+              }
             });
+          }
 
-            }, function (_error) {
-                deferred.reject(JSON.parse(_error.text));
-                console.log("in tweet " + _error.text);
-            }
-          )
-        );
+        }, function (error) {
+          deferred.reject(JSON.parse(error.text));
+        });
       },
-
 
       /**
        * uses oAuth library to make a GET call
@@ -293,7 +262,6 @@ angular.module('twitterLib', ['config'])
         return deferred.promise;
       },
 
-
       /**
        * tweet uses oAuth library to make a POST call
        *
@@ -301,32 +269,23 @@ angular.module('twitterLib', ['config'])
        * @param _options.params
        */
       apiPostCall: function (_options) {
-
-        alert('apiPostCall');
-
         var deferred = $q.defer();
-
         oauth = oauth || OAuth(options);
-
         oauth.post(_options.url, _options.params,
-
           function (data) {
-              deferred.resolve(JSON.parse(data.text));
-          },
-          function (error) {
-            console.log("in apiPostCall reject " + error.text);
+            deferred.resolve(JSON.parse(data.text));
+          }, function (error) {
             deferred.reject(JSON.parse(error.text));
           }
         );
         return deferred.promise;
       },
 
-
       /**
        * clear out the tokens stored in local storage
        */
       logOut: function () {
-          window.localStorage.removeItem(twitterKey);
+          $window.localStorage.removeItem(twitterKey);
           options.accessTokenKey = null;
           options.accessTokenSecret = null;
           console.log("Please authenticate to use this app");
