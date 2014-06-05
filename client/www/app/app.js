@@ -40,11 +40,21 @@ angular.module('starter', [
       templateUrl: 'app/main.html'
     })
 
-    .state('home.home', {
-      url: '/home',
+    .state('home.login', {
+      url: '/login',
       views: {
         'home': {
-          templateUrl: 'app/home/home.html',
+          templateUrl: 'app/home/home_login.html',
+          controller: 'HomeCtrl'
+        }
+      }
+    })
+
+    .state('home.start', {
+      url: '/start',
+      views: {
+        'home': {
+          templateUrl: 'app/home/home_start.html',
           controller: 'HomeCtrl'
         }
       }
@@ -138,5 +148,5 @@ angular.module('starter', [
       }
     })
 
-  $urlRouterProvider.otherwise('/home/home');
+  $urlRouterProvider.otherwise('/home/login');
 });
