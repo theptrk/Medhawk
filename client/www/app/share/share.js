@@ -56,15 +56,19 @@ angular.module('share', ['config', 'twitterLib'])
   };
   
   $scope.prepareTweet = function(){
-    $http({
-      method:"GET",
-      url: configuration.SERVERPATH + "/emojis/" + $scope.emoji,
-      responseType: "blob"
-    }).success(function(data){
-      var reader = new FileReader();
-      reader.onloadend = function() { $scope.doTweet(reader.result.split(",")[1]); };
-      reader.readAsDataURL(data);
-    });
+    if ( $rootScope.emoji === undefined ) {
+      $scope.doTweet();
+    } else {
+      $http({
+        method:"GET",
+        url: configuration.SERVERPATH + "/emojis/" + $scope.emoji,
+        responseType: "blob"
+      }).success(function(data){
+        var reader = new FileReader();
+        reader.onloadend = function() { $scope.doTweet(reader.result.split(",")[1]); };
+        reader.readAsDataURL(data);
+      });
+    }
   };
 
   $scope.doTweet = function (picture) {
