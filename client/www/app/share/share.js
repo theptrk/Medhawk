@@ -3,6 +3,7 @@ angular.module('share', ['config', 'twitterLib'])
 .controller('ShareCtrl', ['$rootScope', '$scope', '$http', 'TwitterLib', 'configuration', '$state', function($rootScope, $scope, $http, TwitterLib, configuration, $state){
   var effects = _.pluck($rootScope.drugEffects, "name");
   var effectString = "";
+  $scope.tagString = "";
   $scope.hideEmojis = true;
   $scope.emojiFilenames = [
     'agitated.png',
@@ -27,6 +28,13 @@ angular.module('share', ['config', 'twitterLib'])
     'worried.png'
   ];
 
+  $scope.tags = {
+    '@US_FDA': false,
+    '#ThisDrugSucks': false
+  };
+
+  $scope.tags['@' + $rootScope.drugHandle] = false;
+
   if (effects.length === 1) {
     effectString = effects[0];
   } else if (effects.length === 2) {
@@ -41,10 +49,20 @@ angular.module('share', ['config', 'twitterLib'])
     });
   }
 
-  $scope.tweetMessage = "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + 
-    ". @FDA " + $rootScope.drugHandle +
-    " #ThisDrugSucks via @Medhawk";
+  $scope.tweetMessage = "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + $scope.tagString + "via @Medhawk";
 
+  // checkboxes on change, update
+  $scope.toggleSelection = function(selection) {
+    $scope.tags[selection] = !$scope.tags[selection];
+    // update tagString
+    $scope.tagString = "";
+    _.each($scope.tags, function(selected, tagName) {
+      if(selected) {
+        $scope.tagString = $scope.tagString.concat(tagName, ' ');
+      }
+    });
+    $scope.tweetMessage = "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " " + $scope.tagString + "via @Medhawk";
+  };
 
   $scope.doLogin = function () {
       TwitterLib.init();
