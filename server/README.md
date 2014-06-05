@@ -8,5 +8,5 @@
   of that instance to env.js as `module.exports.MONGOPATH = your mongo path
   here`
 * To insert the sample data, run `node sampleData/insertData.js`.
-* Run `node main.js` to start the server and start logging and serving
+* Run `node server.js` to start the server and start logging and serving
   requests.
