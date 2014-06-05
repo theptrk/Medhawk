@@ -9,7 +9,6 @@ Sharing medication side effects with the world.
 * Ionic for building to native apps
 * Angular for organizing the code
 * Gulp for building and linting
-* Karma + Mocha + Jasmine for testing
 
 ### Server:
 
