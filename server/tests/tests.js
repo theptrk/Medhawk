@@ -194,27 +194,5 @@ describe('Server', function () {
       });
     });
   });
-
-  describe('/emojis', function () {
-    it('should return 200 on a get request', function (done) {
-      request.get(reqUrl + '/emojis/angry.png', function (error, response, body) {
-        expect(!!error).to.be.false;
-        expect(response.statusCode).to.equal(200);
-
-        done();
-      });
-    });
-
-    it('should return image data', function (done) {
-      request.get(reqUrl + '/emojis/angry.png', function (error, response, body) {
-        expect(!!error).to.be.false;
-        expect(response.statusCode).to.equal(200);
-
-        expect(body).to.exist;
-
-        done();
-      });
-    });
-  })
 });
 
