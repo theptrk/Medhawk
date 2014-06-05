@@ -26,6 +26,14 @@ textarea {
   line-height: 1.2;
 }
 
+.invalid {
+  border: 1px solid red;
+}
+
+.errorMsg {
+  color: red;
+}
+
 .drugField {
   margin-top: 10px;
 }

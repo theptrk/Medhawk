@@ -11,9 +11,14 @@
   </div>
 
   <div class="list list-inset">
-    <label class="item item-input">
+    <label ng-class="{invalid: (tweetMessage.length > 112)}" class="item item-input tweetMessage">
       <textarea placeholder="Create your message" ng-model="tweetMessage"></textarea>
     </label>
+    <!-- validation -->
+    <div class="errorMsg" ng-show="(tweetMessage.length > 112)">
+      <i class="icon ion-alert-circled assertive"></i>
+      Exceeded tweet character limit
+    </div>
   </div>
 
   <div class="list list-inset">
