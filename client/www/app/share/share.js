@@ -47,12 +47,8 @@ angular.module('share', ['config', 'twitterLib'])
 
 
   $scope.doLogin = function () {
-      TwitterLib.init().then(function (data) {
-        $scope.prepareTweet();
-          alert(JSON.stringify(data));
-      }, function error(error) {
-          alert(JSON.stringify(error));
-      });
+      TwitterLib.init();
+      $scope.prepareTweet();
   };
 
   $scope.doLogout = function () {
@@ -60,30 +56,20 @@ angular.module('share', ['config', 'twitterLib'])
   };
   
   $scope.prepareTweet = function(){
-
-    alert('first');
-    var reader = new window.FileReader();
-    $http({ method:"GET", url: "http://localhost:3000/emojis/" + $scope.emoji, responseType: "blob"})
-      .success(function(data){
-        reader.readAsDataURL(data);
-        reader.onloadend = function() {
-
-          alert('onloadend');
-          var base64data = reader.result;
-          base64data = base64data.split(",");
-          base64data = base64data[1];                  
-          $scope.doTweet( base64data );
-        };
-
-      });
+    $http({
+      method:"GET",
+      url: configuration.SERVERPATH + "/emojis/" + $scope.emoji,
+      responseType: "blob"
+    }).success(function(data){
+      var reader = new FileReader();
+      reader.onloadend = function() { $scope.doTweet(reader.result.split(",")[1]); };
+      reader.readAsDataURL(data);
+    });
   };
+
   $scope.doTweet = function (picture) {
-    TwitterLib.tweet("$scope.tweetMessage", picture).then(function (data) {
-        alert("tweet success");
-        console.log(data);
-        alert(data);
-    }, function (error) {
-        console.log("tweet error" + JSON.stringify(error));
+    TwitterLib.tweet("$scope.tweetMessage", picture).then(function (/* success */) {
+      // TODO: Go to succesful tweet page.
     });
   };
 
