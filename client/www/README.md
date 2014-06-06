@@ -1,32 +1,42 @@
-This is an addon starter template for the [Ionic Framework](http://ionicframework.com/).
+Set up Medhawk Client
+=====================
 
-## How to use this template
+## Building this project
 
-*This template does not work on its own*. It is missing the Ionic library, and AngularJS.
+You will need the ionic utility to build, emulate or package this project.
 
-To use this, either create a new ionic project using the ionic node.js utility, or copy and paste this into an existing Cordova project and download a release of Ionic separately.
-
-### With the Ionic tool:
-
-Take the name after `ionic-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+You can get it using npm like so:
 
 ```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myApp blank
+$ sudo npm install -g ionic
 ```
 
-Then, to run it, cd into `myApp` and run:
+Then run:
 
 ```bash
-$ ionic platform add ios
+$ ionic platform ios
+$ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git
+$ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
+$ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-dialogs.git
+
 $ ionic build ios
 $ ionic emulate ios
+
+
 ```
 
-Substitute ios for android if not on a Mac, but if you can, the ios development toolchain is a lot easier to work with until you need to do anything custom to Android.
+to emulate. After building you can open the project in xcode for final
+packaging as an ios application.
 
-## Demo
-http://plnkr.co/edit/tpl:IUU30p?p=preview
 
-## Issues
-Issues have been disabled on this repo, if you do find an issue or have a question consider posting it on the [Ionic Forum](http://forum.ionicframework.com/).  Or else if there is truly an error, follow our guidelines for [submitting an issue](http://ionicframework.com/contribute/#issues) to the main Ionic repository. On the other hand, pull requests are welcome here!
+You will need bower to install client dependencies:
+
+cd into the client directory
+```bash
+$ bower install
+``` 
+
+## File changes
+All app changes are done in the "www" directory 
+  within the file www/app/config.js, change SERVERPATH to the server address you want
+  
