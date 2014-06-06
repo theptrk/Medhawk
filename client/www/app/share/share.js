@@ -27,6 +27,13 @@ angular.module('share', ['config', 'twitterLib'])
     'worried.png'
   ];
 
+  $scope.tags = {
+    '@US_FDA': false,
+    '#ThisDrugSucks': false
+  };
+
+  $scope.tags['@' + $rootScope.drugHandle] = false;
+
   if (effects.length === 1) {
     effectString = effects[0];
   } else if (effects.length === 2) {
@@ -41,10 +48,9 @@ angular.module('share', ['config', 'twitterLib'])
     });
   }
 
-  $scope.tweetMessage = "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + 
-    ". @FDA " + $rootScope.drugHandle +
-    " #ThisDrugSucks via @Medhawk";
-
+  $scope.tweetMessage = {
+    message: "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " via @Medhawk"
+  };
 
   $scope.doLogin = function () {
       TwitterLib.init();
@@ -72,7 +78,7 @@ angular.module('share', ['config', 'twitterLib'])
   };
 
   $scope.doTweet = function (picture) {
-    TwitterLib.tweet("$scope.tweetMessage", picture).then(function (/* success */) {
+    TwitterLib.tweet($scope.tweetMessage.message, picture).then(function (/* success */) {
       // TODO: Go to succesful tweet page.
     });
   };
