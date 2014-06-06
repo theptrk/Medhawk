@@ -1,7 +1,7 @@
-Medhawk Client
+Set up Medhawk Client
 =====================
 
-## Using this project
+## Building this project
 
 You will need the ionic utility to build, emulate or package this project.
 
@@ -14,7 +14,11 @@ $ sudo npm install -g ionic
 Then run:
 
 ```bash
-$ ionic platforms add ios
+$ ionic platform ios
+$ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git
+$ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
+$ cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-dialogs.git
+
 $ ionic build ios
 $ ionic emulate ios
 ```
@@ -22,8 +26,24 @@ $ ionic emulate ios
 to emulate. After building you can open the project in xcode for final
 packaging as an ios application.
 
-More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/getting-started) page.
 
-## Linting
+You will need bower to install client dependencies:
 
-Just run `gulp lint`
+cd into the client directory
+```bash
+$ bower install
+``` 
+
+## File changes
+
+in file: client/www/app/config.js, 
+  change SERVERPATH to the server address you want
+  change Twitter authentication
+
+move client/assets/icons to client/platforms/ios/MedHawk/Resources/icons
+
+move client/assets/splash to client/platforms/ios/MedHawk/Resources/splash
+
+
+
+  
