@@ -3,6 +3,7 @@ angular.module('share', ['config', 'twitterLib'])
 .controller('ShareCtrl', ['$rootScope', '$scope', '$http', 'TwitterLib', 'configuration', '$state', function($rootScope, $scope, $http, TwitterLib, configuration, $state){
   var effects = _.pluck($rootScope.drugEffects, "name");
   var effectString = "";
+  $scope.loading = false;
   $scope.hideEmojis = true;
   $scope.emojiFilenames = [
     'agitated.png',
@@ -32,7 +33,7 @@ angular.module('share', ['config', 'twitterLib'])
     '#ThisDrugSucks': false
   };
 
-  $scope.tags['@' + $rootScope.drugHandle] = false;
+  $scope.tags[$rootScope.drugHandle] = false;
 
   if (effects.length === 1) {
     effectString = effects[0];
@@ -49,7 +50,7 @@ angular.module('share', ['config', 'twitterLib'])
   }
 
   $scope.tweetMessage = {
-    message: "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " via @Medhawk"
+    message: "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " via @MedHawkApp"
   };
 
   $scope.doLogin = function () {
@@ -78,12 +79,13 @@ angular.module('share', ['config', 'twitterLib'])
   };
 
   $scope.doTweet = function (picture) {
+    $scope.loading = true;
     TwitterLib.tweet($scope.tweetMessage.message, picture).then(function (/* success */) {
       function alertDismissed() {
         console.log('tweet successful');
         $state.go('home.start');
       }
-
+      $scope.loading = false;
       navigator.notification.alert(
           'Thanks for sharing',  // message
           alertDismissed,         // callback

@@ -1,13 +1,14 @@
 <ion-header-bar class="bar-positive">
   <button class="button button-icon icon ion-ios7-arrow-back" ng-click="back()"></button>
   <h1 class="title">Share</h1>
+  <button class="button button-clear icon ion-loading-c" ng-show="loading"></button>
 </ion-header-bar>
 
 
 <ion-content has-header class="padding">
 
   <div>
-    <h3><b>Share your State of Wellness</b></h3>
+    <h3 class="shareTitle">Make yourself heard!</h3>
   </div>
 
   <div class="list list-inset">
@@ -20,18 +21,21 @@
       Exceeded tweet character limit
     </div>
   </div>
-
-  <div class="list list-inset">
-    <h4>Suggested tags</h4>
-    <ul class="">
-      <li class="item"  ng-repeat="(tag, selected) in tags">
-        {{ tag }}
-      </li>
-    </ul>
-  </div>
-
+  
   <div class="row">
-    <img class="emoji" src="img/emojis/{{ emoji }}" ng-show="emoji">
+    <div class="col col-60">
+      <h5>Suggested tags:</h5>
+      <div class="">
+        <div class="suggestedTags"  ng-repeat="(tag, selected) in tags">
+          {{ tag }}
+        </div>
+      </div>
+    </div>
+    <div class="col col-40">
+      <div class="box">
+        <img class="emojiEven" src="img/emojis/{{ emoji }}" ng-show="emoji">
+      </div>
+    </div>
   </div>
 
   <div class="row">
@@ -43,10 +47,6 @@
         </div>
       </button>
     </div>
-  </div>
-  
-  <div class="row">
-    <p ng-click="doLogout()">Log out</p>
   </div>
 
 </ion-content>

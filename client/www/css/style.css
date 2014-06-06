@@ -121,3 +121,19 @@ img {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
+.shareTitle {
+  color: #0759E2;
+  text-align: center;
+  font-size: 27px;
+}
+
+.suggestedTags {
+  font-size: 16px;
+  padding: 1px;
+}
+
+.emojiEven {
+  width: 100px;
+  height: 100px;
+}
