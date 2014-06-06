@@ -33,7 +33,7 @@ angular.module('share', ['config', 'twitterLib'])
     '#ThisDrugSucks': false
   };
 
-  $scope.tags['@' + $rootScope.drugHandle] = false;
+  $scope.tags[$rootScope.drugHandle] = false;
 
   if (effects.length === 1) {
     effectString = effects[0];
@@ -50,7 +50,7 @@ angular.module('share', ['config', 'twitterLib'])
   }
 
   $scope.tweetMessage = {
-    message: "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " via @Medhawk"
+    message: "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " via @MedHawkApp"
   };
 
   $scope.doLogin = function () {
