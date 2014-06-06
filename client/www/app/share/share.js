@@ -53,8 +53,8 @@ angular.module('share', ['config', 'twitterLib'])
   };
 
   $scope.doLogin = function () {
-      TwitterLib.init();
-      $scope.prepareTweet();
+    TwitterLib.init();
+    $scope.prepareTweet();
   };
 
   $scope.doLogout = function () {
@@ -79,7 +79,17 @@ angular.module('share', ['config', 'twitterLib'])
 
   $scope.doTweet = function (picture) {
     TwitterLib.tweet($scope.tweetMessage.message, picture).then(function (/* success */) {
-      // TODO: Go to succesful tweet page.
+      function alertDismissed() {
+        console.log('tweet successful');
+        $state.go('home.start');
+      }
+
+      navigator.notification.alert(
+          'Thanks for sharing',  // message
+          alertDismissed,         // callback
+          'Tweet Successful!',     // title
+          'Done'                  // buttonName
+      );
     });
   };
 
