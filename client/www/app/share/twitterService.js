@@ -205,7 +205,7 @@ angular.module('twitterLib', ['config'])
       tweet: function (message, media) {
         return Twitter.verify().then(function () {
           var cb = new Codebird();
-          cb.setConsumerKey("hG5JkrDkarl5cPmjc94Lwsu7a", "3s0oxghx1yQ21ag8r7R5KnOVWRJXuXHsjJvjCmdJRxj20FKUIv");
+          cb.setConsumerKey(configuration.oauthSettings.consumerKey, configuration.oauthSettings.consumerSecret);
           cb.setToken(oauth.getAccessToken()[0], oauth.getAccessToken()[1]);
 
           if (media !== undefined) {
