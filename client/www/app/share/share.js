@@ -3,7 +3,6 @@ angular.module('share', ['config', 'twitterLib'])
 .controller('ShareCtrl', ['$rootScope', '$scope', '$http', 'TwitterLib', 'configuration', '$state', function($rootScope, $scope, $http, TwitterLib, configuration, $state){
   var effects = _.pluck($rootScope.drugEffects, "name");
   var effectString = "";
-  $scope.tagString = "";
   $scope.hideEmojis = true;
   $scope.emojiFilenames = [
     'agitated.png',
@@ -49,19 +48,8 @@ angular.module('share', ['config', 'twitterLib'])
     });
   }
 
-  $scope.tweetMessage = "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + $scope.tagString + "via @Medhawk";
-
-  // checkboxes on change, update
-  $scope.toggleSelection = function(selection) {
-    $scope.tags[selection] = !$scope.tags[selection];
-    // update tagString
-    $scope.tagString = "";
-    _.each($scope.tags, function(selected, tagName) {
-      if(selected) {
-        $scope.tagString = $scope.tagString.concat(tagName, ' ');
-      }
-    });
-    $scope.tweetMessage = "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " " + $scope.tagString + "via @Medhawk";
+  $scope.tweetMessage = {
+    message: "I'm taking " + $rootScope.drugName + " and I'm experiencing " + effectString + " via @Medhawk"
   };
 
   $scope.doLogin = function () {
@@ -90,7 +78,7 @@ angular.module('share', ['config', 'twitterLib'])
   };
 
   $scope.doTweet = function (picture) {
-    TwitterLib.tweet("$scope.tweetMessage", picture).then(function (/* success */) {
+    TwitterLib.tweet($scope.tweetMessage.message, picture).then(function (/* success */) {
       // TODO: Go to succesful tweet page.
     });
   };
